@@ -11,17 +11,42 @@ public class TikTok {
 
         do {
             System.out.println("Choose an action from the menu:\n1. Find the profile description for a given account\n2. List all accounts\n3. Create an account\n4. Delete an account\n5. Display all posts for a single account\n6. Add a new post for an account\n7. Load a file of actions from disk and process this\n8. Quit");
-            //choice =  input.nextLine();
-            choice = "7";
+            choice =  input.nextLine();
+            
             if (choice.equals("1")) {
-                System.out.println("Hellow");
+                System.out.println("");
 
-            } else if (choice.equals("2")) {
-            } else if (choice.equals("3")) {
-            } else if (choice.equals("4")) {
-            } else if (choice.equals("5")) {
-            } else if (choice.equals("6")) {
-            } else if (choice.equals("7")) {
+            }
+            else if (choice.equals("2"))
+            {   
+                
+                System.out.println("Enter the account name:\n");
+                String aName = input.nextLine();
+                descriptionFinder(aName);
+
+
+            }
+            else if (choice.equals("3")) 
+            {
+                System.out.println("");
+
+            } else if (choice.equals("4"))
+            {
+                System.out.println("");
+
+            } 
+            else if (choice.equals("5")) 
+            {
+                System.out.println("");
+
+            } else if (choice.equals("6")) 
+            {
+                System.out.println("");
+
+            }
+            else if (choice.equals("7")) 
+            {
+                System.out.println("");
                 populate();
 
 
@@ -80,20 +105,27 @@ public class TikTok {
         }
         System.out.println("\nDataset populated!!!");
     }
-        public static String indexFinder( char[] arrayOfAccount) {
-            String name = "";
-            for (char c : arrayOfAccount)
+    public static String indexFinder( char[] arrayOfAccount) {
+        String name = "";
+        for (char c : arrayOfAccount)
+        {
+            if (Character.isDigit(c))
             {
-                if (Character.isDigit(c))
-                {
-                    name = String.valueOf(c);
-
-                }
+            name = String.valueOf(c);
 
             }
+
+        }
             //System.out.println(name.toString());
             return name.toString();
-        }
+    }
+    public static void descriptionFinder(String accountName)
+    {   Account account = new Account(accountName,"");
+        BinarySearchTree aNode = new BinarySearchTree();
+        aNode.insert(account);
+        if(aNode.)
+
+    }
 
 }
 

@@ -133,4 +133,20 @@ class BinarySearchTree
         return node.right;
 
     }
+  public BinaryTreeNode<Account> find ( Account d )
+  {
+    if (root == null)
+      return null;
+    else
+      return find (d, root);    }
+  public BinaryTreeNode<Account> find ( Account d, BinaryTreeNode<Account> node )
+  {
+    int cmp = d.compareTo (node.data);
+    if (cmp == 0)
+      return node;
+    else if (cmp < 0)
+      return (node.left == null) ? null : find (d, node.left);
+    else
+      return (node.right == null) ? null : find (d, node.right);
+ }
 }

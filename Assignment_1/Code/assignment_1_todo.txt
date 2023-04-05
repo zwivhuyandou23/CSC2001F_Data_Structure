@@ -8,3 +8,4 @@
 -  write the code to load in the external file
 - intelli repair
 - function reads in all the statements in the file, create new user , add an account
+- implement get methods more not fields

@@ -149,4 +149,23 @@ class BinarySearchTree
     else
       return (node.right == null) ? null : find (d, node.right);
  }
+
+ void getListOfAccounts()
+ {  
+  getListOfAccounts(root);
+ }
+ void getListOfAccounts(BinaryTreeNode<Account> node) // uses preorder algorithm
+   {
+    
+     if (node != null)
+     {
+      visit(node);
+      getListOfAccounts(node.getLeft());
+      getListOfAccounts(node.getRight());
+     }
+   }
+  void visit(BinaryTreeNode<Account> node)
+  {
+    System.out.println(node.data);
+  }
 }

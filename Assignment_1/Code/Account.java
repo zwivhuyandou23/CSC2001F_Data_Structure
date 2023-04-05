@@ -35,10 +35,6 @@ public class Account implements Comparable<Account>
         accountName = name;
 
     }
-    public void addAccountDescription(String desc){
-
-        description = desc;
-    }
     public void addAccountPost(Posts p){
         
         if (p != null)
@@ -58,7 +54,7 @@ public class Account implements Comparable<Account>
     public String toString()
     {
 
-        return "The profile description is: "+getAccountName()+" "+getAccountDescription()+".";
+        return getAccountName()+" "+getAccountDescription()+".";
     }
 
     @Override

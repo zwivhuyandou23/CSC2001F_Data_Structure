@@ -1,9 +1,8 @@
 public class Posts
 {
-    private String title, videoName;
-    private int numberOfLikes;
+    private String title, videoName, numberOfLikes;
     
-    public Posts(String t, String v, int n)
+    public Posts(String t, String v, String n)
     {
 
         title = t;
@@ -20,11 +19,11 @@ public class Posts
 
         return videoName;
     }
-    public int getLikes()
+    public String getLikes()
     {
         return numberOfLikes;
     }
-    public String tostring()
+    public String toString()
     {
 
         return "Title: "+getTitle()+"\n"+"Video: "+getVideo()+"\n"+"Number of likes: "+getLikes();

@@ -1,11 +1,11 @@
-
+import java.util.ArrayList;
 
 public class Account implements Comparable<Account>
 {
 
     public String accountName, description;
     private int count = 1; //keeps count of no. of Posts objects in the accountPosts array
-    private Posts[] accountPosts  = new Posts[count] ;// create this type
+    private ArrayList<Posts> accountPosts = new ArrayList<Posts>() ;// create this type
     
     public Account(String a, String d){
         accountName = a;
@@ -31,6 +31,13 @@ public class Account implements Comparable<Account>
     {
         return count;
     }
+    public void accountPosts()
+    {
+        for (Posts i : accountPosts)
+        {
+            System.out.println(i);
+        }
+    }
     public void addAccountName(String name){
         accountName = name;
 
@@ -39,7 +46,7 @@ public class Account implements Comparable<Account>
         
         if (p != null)
         {
-            accountPosts[count-1] = p;
+            accountPosts.add(p);
             count++;
             
         }
@@ -50,18 +57,17 @@ public class Account implements Comparable<Account>
     // this function return 0 if the calling object is less or equal the argument object
     // uses the getNumberOfPosts functions to see how many posts an account has and
 
-
-    public String toString()
-    {
-
-        return getAccountName()+" "+getAccountDescription()+".";
-    }
-
     @Override
     public int compareTo(Account other) 
     {
         return (this.accountName).compareTo(other.accountName);
         
     }
+    public String toString()
+    {
+
+        return getAccountName()+" "+getAccountDescription();
+    }
+
 }
 

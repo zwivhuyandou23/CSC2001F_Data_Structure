@@ -9,3 +9,11 @@
 - intelli repair
 - function reads in all the statements in the file, create new user , add an account
 - implement get methods more not fields
+
+challenges:
+delete
+find
+
+to-do :
+
+- attend to delete, seek help

@@ -78,12 +78,8 @@ class BinarySearchTree
     }
     public void delete(Account d)
     {
-        if (root.data == d)
-        {
-            root = null; // create a visitor function
-        }
-        else
-            delete(d, root);
+       
+          delete(d, root);
     }
     public BinaryTreeNode<Account> delete(Account d, BinaryTreeNode<Account> node)
     { 
@@ -104,7 +100,11 @@ class BinarySearchTree
         node.right = removeMin(node.right);
       }
       else if (node.left != null)
-        node.left = null;
+
+        node= node.left;
+      
+      else  
+        node = node.right;
           
     return node;   
     }
@@ -144,8 +144,10 @@ class BinarySearchTree
     int cmp = d.compareTo (node.data);
     if (cmp == 0)
       return node;
+
     else if (cmp < 0)
       return (node.left == null) ? null : find (d, node.left);
+    
     else
       return (node.right == null) ? null : find (d, node.right);
  }

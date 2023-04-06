@@ -48,9 +48,9 @@ public class TikTok {
                 String aName = input.nextLine();
 
                 
-                Account oldAccount = new Account(aName,"");
+                Account oldAccount = new Account(aName,null);
                 tree.delete(oldAccount);
-                System.out.println("Account: "+oldAccount.toString()+ " has been removed.");
+                System.out.println("Account: "+oldAccount.getAccountName()+ " has been removed.");
 
             } 
             else if (choice.equals("5"))
@@ -59,9 +59,13 @@ public class TikTok {
                 String aName = input.nextLine();
 
                 
-                Account account = new Account(aName,"");
-                tree.delete(account);
+                Account account = new Account(aName,null);
+                
+                BinaryTreeNode<Account> b =  tree.find(account);
+                
                 System.out.println("Posts by: "+account.getAccountName());
+                b.data.accountPosts();
+                
                 // to be continued
 
 
@@ -106,61 +110,63 @@ public class TikTok {
 
         while (line != null)
         {
-            System.out.println(line); // shows what line is being processed
+            //7System.out.println(line); // shows what line is being processed
             if (line.substring(0, 6).equals("Create"))
             {
                 String accountDetails, description;
                 accountDetails = line.substring(7);
 
                 char[] chars = accountDetails.toCharArray();  //storing the account details into a char array
-                String indexStr = indexFinder(chars);         // the indexFinder return a string/char of the last char on the account name.
-                int index = accountDetails.indexOf(indexStr);
+                
+                int index = accountDetails.indexOf(" ");
 
-                String aName = accountDetails.substring(0, index + 1);        
+                String aName = accountDetails.substring(0, index);  
+                //System.out.println(aName);      
                 description = accountDetails.substring(index + 2); 
                 tree.insert(new Account(aName, description));
                 line = br.readLine();
             }
             else if (line.substring(0, 3).equals("Add")) {
                 
-                String accountDetails, video,title;
-                int likes;
+                String accountDetails, video,title,likes;
 
-                accountDetails = line.substring(3);
+                accountDetails = line.substring(4);
 
                 char[] chars = accountDetails.toCharArray();  //storing the account details into a char array
-                String indexStr = indexFinder(chars);         // the indexFinder return a string/char of the last char on the account name.
-                int index1 = accountDetails.indexOf(indexStr);
+                
+                int index1 = accountDetails.indexOf(" ");
 
-                String aName = accountDetails.substring(0, index1 + 1);
-                System.out.println(aName);
-                accountDetails = accountDetails.substring(index1 + 2);
+                String aName = accountDetails.substring(0, index1);
+                //System.out.println(aName);
+                accountDetails = accountDetails.substring(index1);
                 
 
-                title = accountDetails.substring(0,14);
-                System.out.println(title);
-                
+                video = accountDetails.substring(1,14);
+                //System.out.println(video);
+                accountDetails = accountDetails.substring(15);
+                likes =  accountDetails.substring(0, accountDetails.indexOf(" "));
+                //System.out.println(likes);
+                accountDetails = accountDetails.substring(accountDetails.indexOf(" ")+1);
+                title = accountDetails;
+                //System.out.println(title);
+                BinaryTreeNode<Account> node =  tree.find(new Account(aName,null));
+                if ( node!= null)
+                {
+                    Posts newPost = new Posts(title, video, likes);
+                    
+                    node.data.addAccountPost(newPost);
+
+                    System.out.println(newPost+" Exists");
+                }
+                else
+                System.out.println("No such account exists Does not Exists");// ask them to create an account
+
                 line = br.readLine();
             }
 
         }
         System.out.println("\nDataset populated!!!");
         br.close();
-    }
-
-    public String indexFinder( char[] arrayOfAccount) {
-        String name = "";
-        for (char c : arrayOfAccount)
-        {
-            if (Character.isDigit(c))
-            {
-            name = String.valueOf(c);
-
-            }
-
-        }
-            //System.out.println(name.toString());
-            return name.toString();
     }
 
     public  void descriptionFinder(String accName)

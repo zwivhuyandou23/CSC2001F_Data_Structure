@@ -126,7 +126,7 @@ public class Profile {
     public  void populate() throws IOException
     {
 
-        FileReader file = new FileReader("C:\\Users\\Zwivh\\OneDrive - University of Cape Town\\3rd Year\\CSC2001F\\dataset.txt");
+        FileReader file = new FileReader("dataset.txt");
 
         BufferedReader br = new BufferedReader(file);
         

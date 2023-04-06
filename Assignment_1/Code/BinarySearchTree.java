@@ -89,10 +89,10 @@ class BinarySearchTree
       int cmp = d.compareTo(node.data);
       if (cmp <0)
 
-        return delete(d, node.left);
+        node.left =  delete(d, node.left);
       else if (cmp > 0)
 
-        return delete(d, node.right);
+        node.right = delete(d, node.right);
 
       else if ((node.left != null) && (node.right != null))
 

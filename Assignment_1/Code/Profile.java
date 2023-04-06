@@ -54,7 +54,8 @@ public class Profile {
                 
                 Account oldAccount = new Account(aName,null);
                 tree.delete(oldAccount);
-                System.out.println("Account: "+oldAccount.getAccountName()+ " has been removed.");
+                
+                System.out.println("Account: "+aName+ " has been removed.");
 
             } 
             else if (choice.equals("5"))
@@ -133,7 +134,7 @@ public class Profile {
 
         while (line != null)
         {
-            System.out.println(line); // shows what line is being processed
+            //System.out.println(line); // shows what line is being processed
             if (line.substring(0, 6).equals("Create"))
             {
                 String accountDetails, description;
@@ -145,7 +146,8 @@ public class Profile {
 
                 String aName = accountDetails.substring(0, index);  
                 //System.out.println(aName);      
-                description = accountDetails.substring(index + 2); 
+                description = accountDetails.substring(index + 1); 
+                System.out.println(description);
                 tree.insert(new Account(aName, description));
                 line = br.readLine();
             }
@@ -192,6 +194,7 @@ public class Profile {
         br.close();
     }
 
+    
     public  void descriptionFinder(String accName)
     {   Account account = new Account(accName,"");
         

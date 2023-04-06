@@ -16,6 +16,6 @@ find
 
 to-do :
 - attend to delete, seek help
-- dealing with same account name, u should tell user account name already taken
+- dealing with same account name, u should tell user account name already taken, and block an account from being created of the same name
 
 - creativity

@@ -31,7 +31,7 @@ public class Account implements Comparable<Account>
     {
         return count;
     }
-    public void accountPosts()
+    public void listAccountPosts()
     {
         for (Posts i : accountPosts)
         {

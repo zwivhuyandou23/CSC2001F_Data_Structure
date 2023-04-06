@@ -26,7 +26,7 @@ public class Posts
     public String toString()
     {
 
-        return "Title: "+getTitle()+"\n"+"Video: "+getVideo()+"\n"+"Number of likes: "+getLikes();
+        return "Title: "+getTitle()+"\n"+"Video: "+getVideo()+"\n"+"Number of likes: "+getLikes()+"\n";
     }
 }
 

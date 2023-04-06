@@ -15,5 +15,7 @@ delete
 find
 
 to-do :
-
 - attend to delete, seek help
+- dealing with same account name, u should tell user account name already taken
+
+- creativity

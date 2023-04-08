@@ -36,14 +36,18 @@ public class Account implements Comparable<Account>
     {
         return count;
     }
-    public void listAccountPosts()
+    public void listAccountPosts(int start, int stop)
     {   
         if (accountPosts != null)
         {
-            for (Posts i : accountPosts)
+            if (start>stop)
+                return;
+            else
             {
-                System.out.println(i);
+                System.out.println (accountPosts.get(start));
+                listAccountPosts (start+1, stop);
             }
+
 
         }
         else 

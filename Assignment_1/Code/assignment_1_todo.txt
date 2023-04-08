@@ -13,7 +13,7 @@ challenges:
 makefile, - sep folder for sep files i.e source, txt, class
 
 to-do :
-- return copies instead of original objects(privacy)
+- return copies instead of original objects(privacy) possibly use clone method
 - make fields private
 
 - return copies of an object not the original object(Privac)

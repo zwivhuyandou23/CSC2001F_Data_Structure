@@ -75,7 +75,7 @@ public class Profile {
                 
                 System.out.println("Posts by: "+account.getAccountName());
                 if (b!=null)
-                    b.data.listAccountPosts();
+                    b.data.listAccountPosts(0,b.data.getAccountPosts().size()-1);
                 else
                     {
                         System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");

@@ -35,6 +35,8 @@ public class Profile {
                 System.out.println();
                    
                 descriptionFinder(aName);
+
+
                 
                 
             System.out.println();   
@@ -247,8 +249,13 @@ public class Profile {
         //System.out.println(foundAccount.data.description);
         if(foundAccount == null)
         {
-            System.out.println("No account exists with account name: "+ accName);
-            createNewAccount();
+
+            System.out.println("Account "+account.getAccountName()+" Does not Exist"+"\nWould you like to create an account?[y/n]");
+            String newAccountQuery = input.nextLine();
+
+            if(newAccountQuery.equals("y"))
+                createNewAccount();
+
 
         }
         else

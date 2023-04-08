@@ -21,5 +21,9 @@ class BinaryTreeNode<T>
    
       return right;
    }
+   T getAccount()
+   {
+      return data;
+   }
    
 }

@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c5e6880-28d6-4609-9dcb-667784c202bd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/Account.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BinarySearchTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/BinarySearchTree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BinarySearchTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/BinarySearchTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BinaryTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/BinaryTreeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Profile.class" beforeDir="false" afterPath="$PROJECT_DIR$/Profile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/Profile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TikTok.class" beforeDir="false" afterPath="$PROJECT_DIR$/TikTok.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assignment_1_todo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/assignment_1_todo.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,14 +31,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/Zwivh/OneDrive - University of Cape Town/3rd Year/CSC2001F/Assignment/DS_Assignement/CSC2001F_Data_Structure/Assignment_1/Code"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Zwivh/OneDrive - University of Cape Town/3rd Year/CSC2001F/Assignment/DS_Assignement/CSC2001F_Data_Structure/Assignment_1/Code&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -44,6 +50,17 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -53,5 +70,8 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Code$Main.ic" NAME="Main Coverage Results" MODIFIED="1680732324140" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

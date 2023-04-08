@@ -6,6 +6,7 @@ public class Account implements Comparable<Account>
     public String accountName, description;
     private int count = 1; //keeps count of no. of Posts objects in the accountPosts array
     private ArrayList<Posts> accountPosts = new ArrayList<Posts>() ;// create this type
+    private ArrayList<String> listOfTitles = new ArrayList<String>();
     
     public Account(String a, String d){
         accountName = a;
@@ -26,16 +27,28 @@ public class Account implements Comparable<Account>
 
         return description;
     }
+    public ArrayList<Posts> getAccountPosts() 
+    {
+        return accountPosts;
+    }
     
     public int getNumberOfPosts()
     {
         return count;
     }
     public void listAccountPosts()
-    {
-        for (Posts i : accountPosts)
+    {   
+        if (accountPosts != null)
         {
-            System.out.println(i);
+            for (Posts i : accountPosts)
+            {
+                System.out.println(i);
+            }
+
+        }
+        else 
+        {
+            System.out.println("Does Not Exist!!!");
         }
     }
     public void addAccountName(String name){
@@ -44,15 +57,15 @@ public class Account implements Comparable<Account>
     }
     public void addAccountPost(Posts p){
         
-        if (p != null)
+        if ((!accountPosts.contains(p)) && (!listOfTitles.contains(p.getTitle()) ))
         {
             accountPosts.add(p);
             count++;
             
         }
 
-
     }
+    
     // this function return 1 if the calling object is greater than the argument object
     // this function return 0 if the calling object is less or equal the argument object
     // uses the getNumberOfPosts functions to see how many posts an account has and

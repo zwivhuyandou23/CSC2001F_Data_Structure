@@ -47,10 +47,15 @@ class BinarySearchTree
           root = new BinaryTreeNode<Account>(d ,null, null);
           
       }
-      else
+      
+      else if (find(d) == null)
       {
         insert(d, root);
         
+      }
+      else
+      {
+        System.out.println("Account Name: "+d.getAccountName()+" "+"already exists!!!");
       }
     }
     public void insert(Account d, BinaryTreeNode<Account> node)
@@ -148,9 +153,13 @@ class BinarySearchTree
     else if (cmp < 0)
       return (node.left == null) ? null : find (d, node.left);
     
-    else
+    else if (cmp>0)
       return (node.right == null) ? null : find (d, node.right);
- }
+    
+    else 
+    return null;
+}
+
 
  void getListOfAccounts()
  {  

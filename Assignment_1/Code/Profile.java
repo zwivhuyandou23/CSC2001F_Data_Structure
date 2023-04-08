@@ -1,49 +1,53 @@
 
 import java.util.*;
+
+import javax.lang.model.util.ElementScanner6;
+
 import java.io.*;  
 public class Profile {
 
-    BinarySearchTree tree = new BinarySearchTree();
+    BinarySearchTree tree;
+    Scanner input;
+    String choice;
 
+    public Profile()
+    {
+    tree = new BinarySearchTree();
+    input = new Scanner(System.in);
+     // throw exception if it's a string
+
+    }
     public void startTikTok () throws IOException
     {
-
-        String choice;
-        Scanner input = new Scanner(System.in);
         
-
-        do {
+        
+        while (true) {
             System.out.println("Choose an action from the menu:\n1. Find the profile description for a given account\n2. List all accounts\n3. Create an account\n4. Delete an account\n5. Display all posts for a single account\n6. Add a new post for an account\n7. Load a file of actions from disk and process this\n8. Quit");
-            choice =  input.nextLine(); // throw exception if it's a string
+            choice =  input.nextLine(); 
             
             
-            if (choice.equals("1")) {
-                System.out.println("");
-                System.out.println("Enter the account name:");
-
-                String aName = input.nextLine();
-                System.out.println("");
-                descriptionFinder(aName);
-            }
-            else if (choice.equals("2"))
-            {   
-                System.out.println("");
-                tree.getListOfAccounts();
-                System.out.println("");
-
-
-            }
-            else if (choice.equals("3"))
+            if (choice.equals("1")) 
             {
                 System.out.println("");
                 System.out.println("Enter the account name:");
-                String aName = input.nextLine();
 
-                System.out.println("Enter the description:");
-                String adescription = input.nextLine();
-                Account newAccount = new Account(aName,adescription);
-                tree.insert(newAccount);
-                System.out.println("\nNew Account has been added:\n"+newAccount.toString());
+                String aName = input.nextLine();
+                System.out.println();
+                   
+                descriptionFinder(aName);
+                
+                
+            System.out.println();   
+            }
+            else if (choice.equals("2"))
+            {   
+                System.out.println();
+                tree.getListOfAccounts();
+                System.out.println();
+            }
+            else if (choice.equals("3"))
+            {
+                createNewAccount();
 
             } else if (choice.equals("4"))
             {
@@ -70,13 +74,21 @@ public class Profile {
                 BinaryTreeNode<Account> b =  tree.find(account);
                 
                 System.out.println("Posts by: "+account.getAccountName());
-                b.data.listAccountPosts();
-                
-                
-                // to be continued
+                if (b!=null)
+                    b.data.listAccountPosts();
+                else
+                    {
+                        System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");
+                        String newAccountQuery = input.nextLine();
+
+                        if(newAccountQuery.equals("y"))
+                            createNewAccount();
 
 
-            } else if (choice.equals("6") )
+                    }
+
+            } 
+            else if (choice.equals("6") )
             {
                 System.out.println("");
                 String aName, title, video, likes;
@@ -96,34 +108,51 @@ public class Profile {
                 Account account = new Account(aName,null);
 
                 BinaryTreeNode<Account> node =  tree.find(account);
+                if (node != null)
+                {
                 Posts newPost = new Posts(title, video, likes);
                 node.data.addAccountPost(newPost);
-
                 System.out.println("New Post added by Account Name: "+account.getAccountName()+"\n"+ newPost); //selection statement for null
+                }
+                else 
+                    createNewAccount();
+
+                
 
             }
+            
             else if (choice.equals("7"))
             {
-                
                 System.out.println("");
                 populate();
                 System.out.println("");
-
-
-            }
-            else if ((Integer.getInteger(choice)< 1) || (Integer.getInteger(choice)> 8))
+            }            
+            else if (choice.equals("8"))
             {
-                System.out.println("\nInvalid option!! Try Again.\n");
+            System.out.println("Done, Goodbye");
+                break;
             }
+            else
+                System.out.println("\nInvalid option!! Try Again.\n");   
+        }
+        
+    
+    } 
 
+    private void createNewAccount()
+    {
+        System.out.println("");
+        System.out.println("Enter the account name:");
+        String aName = input.nextLine();
 
-            
-        } while (!choice.equals("8"));
-        input.close();
+        System.out.println("Enter the description:");
+        String adescription = input.nextLine();
+        Account newAccount = new Account(aName,adescription);
+        tree.insert(newAccount);
+        System.out.println("\nNew Account has been added:\n"+newAccount.toString());       
     }
-    public Profile(){} // constructor
 
-    public  void populate() throws IOException
+    private  void populate() throws IOException
     {
 
         FileReader file = new FileReader("dataset.txt");
@@ -151,9 +180,22 @@ public class Profile {
                 tree.insert(new Account(aName, description));
                 line = br.readLine();
             }
-            else if (line.substring(0, 3).equals("Add")) {
-                
-                String accountDetails, video,title,likes;
+            else if (line.substring(0, 3).equals("Add")) 
+            {   
+                newPost(line);
+                line = br.readLine();
+            }
+                        
+        }
+
+        
+        System.out.println("\nDataset populated!!!");
+        br.close();
+    }
+
+    private void newPost(String line)
+     {
+        String accountDetails, video,title,likes;
 
                 accountDetails = line.substring(4);
 
@@ -174,28 +216,31 @@ public class Profile {
                 accountDetails = accountDetails.substring(accountDetails.indexOf(" ")+1);
                 title = accountDetails;
                 //System.out.println(title);
-                BinaryTreeNode<Account> node =  tree.find(new Account(aName,null));
-                if ( node!= null)
+                Account accountOfNewPost = new Account(aName,null);
+                BinaryTreeNode<Account> node =  tree.find(accountOfNewPost);
+                if ( node != null)
                 {
-                    Posts newPost = new Posts(title, video, likes);
-                    
-                    node.data.addAccountPost(newPost);
-
-                   // System.out.println(newPost+" Exists");
-                }
+                    Posts newAccPost = new Posts(title, video, likes);
+                       if (!node.data.getAccountPosts().contains(newAccPost))
+                            node.data.addAccountPost(newAccPost); 
+                    }
                 else
-                System.out.println("No such account exists Does not Exists");// ask them to create an account
+                    {
+                        System.out.println("Account Name: "+aName+" does not exist!!!\n");
+                        System.out.println("Would you like to create a new Account for "+aName+"?[y/n]");
+                        String newAccountQuery = input.nextLine();
 
-                line = br.readLine();
-            }
+                        if (newAccountQuery.equals("y"))
+                            createNewAccount();
+                        
 
+                    }
+                   
+                   // System.out.println(newPost+" Exists");
         }
-        System.out.println("\nDataset populated!!!");
-        br.close();
-    }
 
     
-    public  void descriptionFinder(String accName)
+    private  void descriptionFinder(String accName)
     {   Account account = new Account(accName,"");
         
         BinaryTreeNode<Account> foundAccount = tree.find(account);
@@ -203,6 +248,8 @@ public class Profile {
         if(foundAccount == null)
         {
             System.out.println("No account exists with account name: "+ accName);
+            createNewAccount();
+
         }
         else
         {

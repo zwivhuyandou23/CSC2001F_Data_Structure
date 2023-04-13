@@ -1,0 +1,54 @@
+
+*** These modified files were found in JOE when it aborted on Thu Apr 13 02:10:59 2023
+*** JOE was aborted by UNIX signal 1
+
+*** File '(Unnamed)'
+Makefile
+
+*** File 'Makefile'
+
+*** File '* Startup Log *'
+Processing '/etc/joe/joerc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/joerc
+
+*** These modified files were found in JOE when it aborted on Thu Apr 13 02:32:13 2023
+*** JOE was aborted by UNIX signal 1
+
+*** File '(Unnamed)'
+Makefile
+
+*** File 'Makefile'
+# 12 April 2023
+
+JAVAC=/usr/bin/javac
+JAVA=/usr/bin/java
+
+.SUFFIXES: .java .class
+
+SRCDIR = src
+BINDIR = bin
+
+$(BINDIR)/%.class:$(SRCDIR)/%.java
+	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
+
+CLASSES: TikTok.class Profile.class \
+         BinarySearchTree.class BinaryTreeNode.class \
+         Account.class Posts.class
+
+CLASS_FILES=$(CLASSES:%.class= $(BINDIR)/%.class)
+
+default: $(CLASS_FILES)
+
+clean:
+        rm $(BINDIR)/*.class
+
+run: $(CLASS_FILES)
+	$(JAVA) -cp bin TikTok
+
+*** File '* Startup Log *'
+Processing '/etc/joe/joerc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/joerc

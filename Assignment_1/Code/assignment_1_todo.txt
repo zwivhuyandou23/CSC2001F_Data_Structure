@@ -21,6 +21,7 @@ to-do :
 - some code in choice blocks might have to be functions
 
 - incorrect choice
+- following, follow, delete, post
 
 - option 1 if they input a non existing account tell them it doesn't exist and ask them to create a new one
 - trying to delete an account that does not exist
@@ -38,7 +39,7 @@ To add on report:
 
 
 
-Toke: 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
+Toke: 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
 
 
 

@@ -1,8 +1,5 @@
 
 import java.util.*;
-
-
-
 import java.io.*;  
 public class Profile {
 
@@ -17,134 +14,43 @@ public class Profile {
      // throw exception if it's a string
 
     }
+
+    /* The function starts the whole user interface when it is called from the main class
+    */
     public void startTikTok () throws IOException
     {
-        
-        
         while (true) {
-            System.out.println("Choose an action from the menu:\n1. Find the profile description for a given account\n2. List all accounts\n3. Create an account\n4. Delete an account\n5. Display all posts for a single account\n6. Add a new post for an account\n7. Load a file of actions from disk and process this\n8. Quit");
-            choice =  input.nextLine(); 
-            
-            
+            System.out.println("Choose an action from the menu:\n1. Find the profile description for a given account\n2. List all accounts\n3. Create an account\n4. Delete an account\n5. Display all posts for a single account\n6. Add a new post for an account\n7. Load a file of actions from disk and process this\n8. List of Followers and Following for an an Account\n9. Add new Follower\n10. Add new Following\n11. Quit");
+            choice =  input.nextLine();       
             if (choice.equals("1")) 
             {
-                System.out.println("");
-                System.out.println("Enter the account name:");
-
-                String aName = input.nextLine();
-                System.out.println();
-                   
-                descriptionFinder(aName);
-
-
-                
-                
-            System.out.println();   
+                option1();   
+                System.out.println();   
             }
             else if (choice.equals("2"))
-            {   
-                System.out.println();
-                tree.getListOfAccounts();
-                System.out.println();
-            }
+                option2();
             else if (choice.equals("3"))
-            {
                 createNewAccount();
-
-            } else if (choice.equals("4"))
-            {
-                System.out.println("");
-                System.out.println("Enter the account name:");
-                String aName = input.nextLine();
-
-                
-                Account oldAccount = new Account(aName,null);
-                tree.delete(oldAccount);
-                
-                System.out.println("Account: "+aName+ " has been removed.");
-
-            } 
+            else if (choice.equals("4"))
+                option4();
             else if (choice.equals("5"))
-            {
-                System.out.println("");
-                System.out.println("Enter the account name:");
-                String aName = input.nextLine();
-
-                
-                Account account = new Account(aName,null);
-                
-                BinaryTreeNode<Account> b =  tree.find(account);
-                
-                System.out.println("Posts by: "+account.getAccountName());
-                if (b!=null)
-                    b.data.listAccountPosts(0,b.data.getAccountPosts().length-1);
-                else
-                    {
-                        System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");
-                        String newAccountQuery = input.nextLine();
-
-                        if(newAccountQuery.equals("y"))
-                            createNewAccount();
-
-
-                    }
-
-            } 
+                option5();
             else if (choice.equals("6") )
-            {
-                System.out.println("");
-                String aName, title, video, likes;
-                System.out.println("Enter the account name:");
-                aName = input.nextLine();
-                if (tree.find(new Account(aName, null) ) == null)
-                {   System.out.println(aName+"'s Account does not exist!!!");
-                    createNewAccount();
-                }
-
-                System.out.println("Video Title:");
-                title = input.nextLine();
-
-                System.out.println("Name of Video:");
-                video = input.nextLine();
-
-                System.out.println("Number of Likes:");
-                likes = input.nextLine();
-
-
-                Account account = new Account(aName,null);
-
-                BinaryTreeNode<Account> node =  tree.find(account);
-                if (node != null)
-                {
-                Posts newPost = new Posts(title, video, likes);
-                node.data.addAccountPost(newPost);
-                System.out.println("New Post added by Account Name: "+account.getAccountName()+"\n"+ newPost); //selection statement for null
-                }
-                
-                    
-
-                
-
-            }
-            
+                option6();
             else if (choice.equals("7"))
+                option7();           
+            else if (choice.equals("8")) 
+                option8();
+            else if (choice.equals("9"))
             {
-                System.out.println("");
-                populate();
-                System.out.println("");
-            }            
-            else if (choice.equals("8"))
-            {
-            System.out.println("Done, Goodbye");
+                System.out.println("Done, Goodbye");
                 break;
             }
             else
                 System.out.println("\nInvalid option!! Try Again.\n");   
         }
-        
-    
     } 
-
+    /*Create a new account */
     private void createNewAccount()
     {
         System.out.println("");
@@ -155,13 +61,17 @@ public class Profile {
         String adescription = input.nextLine();
         Account newAccount = new Account(aName,adescription);
         tree.insert(newAccount);
+
         System.out.println("\nNew Account has been added:\n"+newAccount.toString());       
     }
-
+    /**   
+    *@throws IOException
+    *Loads in the dataset file and populate the data into the Binary Search Tree
+    */
     private  void populate() throws IOException
     {
 
-        FileReader file = new FileReader("/home/zwivhuya/School/CSC2001F/Assignments/DS/CSC2001F_Data_Structure/Assignment_1/Code/src/dataset.txt");
+        FileReader file = new FileReader("C:\\Users\\Zwivh\\OneDrive - University of Cape Town\\3rd Year\\CSC2001F\\Assignment\\DS_Assignement\\CSC2001F_Data_Structure\\Assignment_1\\Code\\src\\dataset.txt");
 
         BufferedReader br = new BufferedReader(file);
         
@@ -174,16 +84,11 @@ public class Profile {
             {
                 String accountDetails, description;
                 accountDetails = line.substring(7);
-
-                //char[] chars = accountDetails.toCharArray();  //storing the account details into a char array
-                
-                
                 int index = accountDetails.indexOf(" ");
 
                 String aName = accountDetails.substring(0, index);
-                //System.out.println(aName);      
-                description = accountDetails.substring(index + 1); 
-                //System.out.println(description);
+                   
+                description = accountDetails.substring(index + 1);
                 tree.insert(new Account(aName, description));
                 line = br.readLine();
             }
@@ -194,42 +99,36 @@ public class Profile {
             }
                         
         }
-
-        
         System.out.println("\nDataset populated!!!");
         br.close();
     }
 
+    /**
+     
+    *@param line
+    * Create a new post from the given dataset
+    */
     private void newPost(String line)
      {
         String accountDetails, video,title,likes;
 
                 accountDetails = line.substring(4);
-
-                //char[] chars = accountDetails.toCharArray();  //storing the account details into a char array
                 
                 int index1 = accountDetails.indexOf(" ");
-
                 String aName = accountDetails.substring(0, index1);
-                //System.out.println(aName);
-                accountDetails = accountDetails.substring(index1);
                 
-
+                accountDetails = accountDetails.substring(index1);
                 video = accountDetails.substring(1,14);
-                //System.out.println(video);
                 accountDetails = accountDetails.substring(15);
-                likes =  accountDetails.substring(0, accountDetails.indexOf(" "));
-                //System.out.println(likes);
+                likes =  accountDetails.substring(0, accountDetails.indexOf(" "));             
                 accountDetails = accountDetails.substring(accountDetails.indexOf(" ")+1);
-                title = accountDetails;
-                //System.out.println(title);
+                title = accountDetails;             
+                
                 Account accountOfNewPost = new Account(aName,null);
                 BinaryTreeNode<Account> node =  tree.find(accountOfNewPost);
                 if ( node != null)
                 {
-                    Posts newAccPost = new Posts(title, video, likes);
-
-                        
+                    Posts newAccPost = new Posts(title, video, likes);          
                         node.data.addAccountPost(newAccPost); 
                     }
                 else
@@ -240,25 +139,18 @@ public class Profile {
 
                         if (newAccountQuery.equals("y"))
                             createNewAccount();
-                        
-
-                    }
-                   
-                   
+                    }   
         }
 
     /*  The function looks for a description matching an account
-        if such an account does not exist it asks user if they want to create an account or not
+    *   if such an account does not exist it asks user if they want to create an account or not
     */
     private  void descriptionFinder(String accName) 
     {   
-        Account account = new Account(accName,"");
-        
-        BinaryTreeNode<Account> foundAccount = tree.find(account);
-        
+        Account account = new Account(accName,"");   
+        BinaryTreeNode<Account> foundAccount = tree.find(account);   
         if(foundAccount == null)
         {
-
             System.out.println("Account "+account.getAccountName()+" Does not Exist"+"\nWould you like to create an account?[y/n]");
             String newAccountQuery = input.nextLine();
 
@@ -273,7 +165,127 @@ public class Profile {
         }
 
     }
+    /*
+     * Executes option 1 instructions
+     */
+    private void option1()
+    {
+        System.out.println("");
+        System.out.println("Enter the account name:");
 
+        String aName = input.nextLine();
+        System.out.println();
+        descriptionFinder(aName);
+    }
+    /*
+     * Executes option 2 instructions
+     */
+    private void option2() 
+    {
+        System.out.println();
+        tree.getListOfAccounts();
+        System.out.println();
+    }
+    /*
+     * Executes option 4 instructions
+     */
+    private void option4() 
+    {
+        System.out.println("");
+        System.out.println("Enter the account name:");
+        String aName = input.nextLine();
+
+        
+        Account oldAccount = new Account(aName,null);
+        tree.delete(oldAccount);
+        
+        System.out.println("Account: "+aName+ " has been removed.");  
+    }
+    /*
+     * Executes option 5 instructions
+     */
+    private void option5() 
+    {
+        System.out.println("");
+        System.out.println("Enter the account name:");
+        String aName = input.nextLine();
+        Account account = new Account(aName,null); 
+        BinaryTreeNode<Account> b =  tree.find(account);
+        System.out.println("Posts by: "+account.getAccountName());
+        if (b!=null)
+            b.data.listAccountPosts(0,b.data.getAccountPosts().length-1);
+        else
+            {
+                System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");
+                String newAccountQuery = input.nextLine();
+
+                if(newAccountQuery.equals("y"))
+                    createNewAccount();
+            }
+    }
+    /*
+     * Executes option 6 instructions
+     */
+    private void option6() 
+    {
+        System.out.println("");
+        String aName, title, video, likes;
+        System.out.println("Enter the account name:");
+        aName = input.nextLine();
+        if (tree.find(new Account(aName, null) ) == null)
+        {   System.out.println(aName+"'s Account does not exist!!!");
+            createNewAccount();
+        }
+
+        System.out.println("Video Title:");
+        title = input.nextLine();
+
+        System.out.println("Name of Video:");
+        video = input.nextLine();
+
+        System.out.println("Number of Likes:");
+        likes = input.nextLine();
+
+        Account account = new Account(aName,null);
+
+        BinaryTreeNode<Account> node =  tree.find(account);
+        if (node != null)
+        {
+        Posts newPost = new Posts(title, video, likes);
+        node.data.addAccountPost(newPost);
+        System.out.println("New Post added by Account Name: "+account.getAccountName()+"\n"+ newPost); 
+        }
+    }
+    /**
+     * Executes option 7 instructions
+     * @throws IOException
+     */
+    private void option7() throws IOException 
+    {
+        System.out.println("");
+        populate();
+        System.out.println("");
+    }
+    private void option8()
+    {
+        System.out.println("Enter Account Name: ");
+        String aName = input.nextLine();
+
+        Account newAccount = new Account(aName,null);
+        BinaryTreeNode<Account> node = tree.find(newAccount);
+
+        if (node !=null)
+        
+            node.getNodeData().addNewFollower(newAccount);
+        else 
+        {
+            System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");
+            String newAccountQuery = input.nextLine();
+
+            if(newAccountQuery.equals("y"))
+                createNewAccount();
+        }
+
+    }
+    
 }
-
-

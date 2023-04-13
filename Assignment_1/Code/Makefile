@@ -10,7 +10,7 @@ BINDIR = bin
 $(BINDIR)/%.class: $(SRCDIR)/%.java
 	$(JAVAC) -d $(BINDIR) -cp $(BINDIR) $<
 
-classes = Posts.class TikTok.class
+classes = Posts.class Account.class BinaryTreeNode.class BinarySearchTree.class Profile.class TikTok.class
 
 CLASS_FILES = $(classes:%.class=$(BINDIR)/%.class)
 

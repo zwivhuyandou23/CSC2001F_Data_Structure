@@ -1,12 +1,12 @@
-import java.util.ArrayList;
 
 public class Account implements Comparable<Account>
 {
 
-    public String accountName, description;
+    private String accountName, description;
     private int count = 1; //keeps count of no. of Posts objects in the accountPosts array
-    private Posts[] accountPosts = new Posts[100]; //different way of storing accountPosts?
-    
+    private Posts[] accountPosts = new Posts[1000]; //different way of storing accountPosts?
+    private Account[] followers = new Account[1_000_000];
+    private Account[] following = new Account[1_000_000];
     
     public Account(String a, String d)
     {
@@ -19,24 +19,48 @@ public class Account implements Comparable<Account>
         this.description = d.description;
 
     }
-    public String getAccountName() // for choice 2
+    /**
+     * 
+     * @return 
+     * returns copy of accountName
+    */
+    public String getAccountName() 
     {
 
-        return accountName;
+        return new String(accountName);
     }
+    /**
+     * 
+     * @return 
+     * returns copy of account description
+    */
     public String getAccountDescription(){
 
-        return description;
+        return new String(description);
     }
+    /**
+     * 
+     * @return 
+     * returns copy of accountPost array
+    */
     public Posts[] getAccountPosts() 
     {
-        return accountPosts;
+        return accountPosts.clone();
     }
-    
+    /**
+     * 
+     * @return 
+     * returns number of posts in an account
+    */
     public int getNumberOfPosts()
     {
         return count-1;
     }
+    /**
+     * recursicely prints out list of account posts
+     * @param start
+     * @param stop
+     */
     public void listAccountPosts(int start, int stop)
     {   
         if (accountPosts != null)
@@ -60,16 +84,22 @@ public class Account implements Comparable<Account>
             System.out.println("No posts for "+getAccountName());
         }
     }
-    public void addAccountName(String name){
-        accountName = name;
 
-    }
+    /**
+     * 
+     * @param p
+     */
     public void addAccountPost(Posts p)
     {
         
        addAccountPost(p,0);
 
     }
+    /**
+     * insert account post into accountPosts array
+     * @param p
+     * @param index
+     */
     public void addAccountPost(Posts p, int index)
     {
         
@@ -96,6 +126,12 @@ public class Account implements Comparable<Account>
         
 
     }
+
+    /**
+     * checks if an account post already exists of the same title
+     * @param p
+     * @return
+     */
     public boolean postExists(Posts p)
     {
         return postExists(p, 0);
@@ -107,7 +143,7 @@ public class Account implements Comparable<Account>
         {   
             if (accountPosts[index] == null)
                 return false;    
-            else if (p.getTitle().compareTo(accountPosts[index].getTitle()) == 0)
+            else if (p.getTitle().equals(accountPosts[index].getTitle()))
             {
                 a  = true;
                 return a;
@@ -123,10 +159,33 @@ public class Account implements Comparable<Account>
         
         return a;
     }
+
+    void addNewFollower(Account a)
+    {   
+        addNewFollower(a,0);
+    }
+    void addNewFollower(Account a,int index)
+    {
+
+        if (followers == null)
+        {
+            followers[index] = a;
+            count++;
+        }
+        else if(followers[index] == null)
+        {
+            followers[index] = a;
+            count++;
+        }
+        else
+        {
+            index++;
+            addNewFollower(a, index);
+        }
     
-    // this function return 1 if the calling object is greater than the argument object
-    // this function return 0 if the calling object is less or equal the argument object
-    // uses the getNumberOfPosts functions to see how many posts an account has and
+
+    }
+    
 
     @Override
     public int compareTo(Account other) 

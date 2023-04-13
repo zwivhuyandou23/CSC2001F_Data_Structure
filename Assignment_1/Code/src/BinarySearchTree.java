@@ -10,7 +10,10 @@ class BinarySearchTree
     root = null;
     }
     
-    
+    /**
+     * Returs height of the BST
+     * @return
+     */
     public int getHeight ()//return height of the binary tree
       {
       return getHeight (root);
@@ -20,10 +23,12 @@ class BinarySearchTree
       if (node == null)
         return -1;
       else
-        return 1 + Math.max (
-         getHeight (node.getLeft ()), getHeight (node.getRight ())
-    );
+        return 1 + Math.max (getHeight (node.getLeft ()), getHeight (node.getRight ()));
       }
+    /**
+     * returns size of tree i.e total number of nodes(Accounts)
+     * @return
+     */
     public int size()
     {
       return size(root);
@@ -40,6 +45,11 @@ class BinarySearchTree
       return 1 + size(node.getLeft()) + size(node.getRight()) ;
       }
     }
+    /**
+     * Compares new Account with existing accounts 
+     * and creates a node and inserts an account into the BST nod
+     * @param d
+     */
     public void insert(Account d)
     {
       if (root == null)
@@ -81,6 +91,10 @@ class BinarySearchTree
       }
 
     }
+    /**
+     * deletes a node containing the given account
+     * @param d
+     */
     public void delete(Account d)
     {
        
@@ -113,6 +127,11 @@ class BinarySearchTree
           
     return node;   
     }
+    /**
+     * finds the least/smallest node in the far left leaf
+     * @param node
+     * @return
+     */
     public BinaryTreeNode<Account> findMin(BinaryTreeNode<Account> node)
     {
       if (node != null)
@@ -124,6 +143,11 @@ class BinarySearchTree
       return node;
 
     }
+    /**
+     * removes the smallest leaf in the BST
+     * @param node
+     * @return
+     */
     public BinaryTreeNode<Account> removeMin(BinaryTreeNode<Account> node)
 
     {
@@ -138,6 +162,11 @@ class BinarySearchTree
         return node.right;
 
     }
+    /**
+     * finds node containing the given account
+     * @param d
+     * @return
+     */
   public BinaryTreeNode<Account> find ( Account d )
   {
     if (root == null)
@@ -160,10 +189,13 @@ class BinarySearchTree
     return null;
 }
 
-
+  /**
+   * Recursively prints all account details
+   */
  void getListOfAccounts()
  {  
   getListOfAccounts(root);
+  System.out.println("Total Number of Accounts: "+size()+".\n");
  }
  void getListOfAccounts(BinaryTreeNode<Account> node) // uses preorder algorithm
    {
@@ -175,6 +207,10 @@ class BinarySearchTree
       getListOfAccounts(node.getRight());
      }
    }
+   /**
+    * prints data of the parameter
+    * @param node
+    */
   void visit(BinaryTreeNode<Account> node)
   {
     System.out.println(node.data);

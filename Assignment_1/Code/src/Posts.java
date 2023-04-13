@@ -12,16 +12,16 @@ public class Posts
     }
     public String getTitle(){
 
-        return title;
+        return new String(title);
     }
     public String getVideo()
     {
 
-        return videoName;
+        return new String(videoName);
     }
     public String getLikes()
     {
-        return numberOfLikes;
+        return new String(numberOfLikes);
     }
     public String toString()
     {

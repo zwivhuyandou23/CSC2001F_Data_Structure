@@ -14,14 +14,23 @@ class BinaryTreeNode<T>
       right = r;
       
    }
+   /**
+    * return left node address
+    * @return
+    */
    BinaryTreeNode<T> getLeft(){
       return left;
    }
+   /**
+    * return right node address
+    * @return
+    */
    BinaryTreeNode<T> getRight(){
    
       return right;
    }
-   T getAccount()
+
+   T getNodeData()
    {
       return data;
    }

@@ -1,24 +1,18 @@
-
 # binary search tree tiktok program makefile
 # Zwivhuya Ndou
 # 12 April 2023
 
-JAVAC=/usr/bin/javac
-JAVA=/usr/bin/java
-
+JAVAC = /usr/bin/javac
 .SUFFIXES: .java .class
-
 SRCDIR = src
 BINDIR = bin
 
-$(BINDIR)/%.class:$(SRCDIR)/%.java
-	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
+$(BINDIR)/%.class: $(SRCDIR)/%.java
+	$(JAVAC) -d $(BINDIR) -cp $(BINDIR) $<
 
-classes: Posts.class Account.class \
-         BinaryTreeNode.class BinarySearchTree.class \
-         Profile.class TikTok.class 
+classes = Posts.class TikTok.class
 
-CLASS_FILES=$(classes:%.class= $(BINDIR)/%.class)
+CLASS_FILES = $(classes:%.class=$(BINDIR)/%.class)
 
 default: $(CLASS_FILES)
 
@@ -26,6 +20,4 @@ clean:
 	rm $(BINDIR)/*.class
 
 run: $(CLASS_FILES)
-	$(JAVA) -cp bin Posts
-
-
+	java -cp bin TikTok

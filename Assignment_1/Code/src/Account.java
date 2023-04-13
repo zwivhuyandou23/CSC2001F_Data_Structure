@@ -5,8 +5,8 @@ public class Account implements Comparable<Account>
     private String accountName, description;
     private int count = 1; //keeps count of no. of Posts objects in the accountPosts array
     private Posts[] accountPosts = new Posts[1000]; //different way of storing accountPosts?
-    private Account[] followers = new Account[1_000_000];
-    private Account[] following = new Account[1_000_000];
+    private Account[] followers = new Account[1_000];
+    private Account[] following = new Account[1_000];
     
     public Account(String a, String d)
     {

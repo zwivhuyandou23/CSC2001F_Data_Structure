@@ -14,11 +14,11 @@ BINDIR = bin
 $(BINDIR)/%.class:$(SRCDIR)/%.java
 	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
 
-CLASSES: TikTok.class Profile.class \
-         BinarySearchTree.class BinaryTreeNode.class \
-         Account.class Posts.class
+classes: Posts.class Account.class \
+         BinaryTreeNode.class BinarySearchTree.class \
+         Profile.class TikTok.class 
 
-CLASS_FILES=$(CLASSES:%.class= $(BINDIR)/%.class)
+CLASS_FILES=$(classes:%.class= $(BINDIR)/%.class)
 
 default: $(CLASS_FILES)
 
@@ -26,6 +26,6 @@ clean:
 	rm $(BINDIR)/*.class
 
 run: $(CLASS_FILES)
-	$(JAVA) -cp bin TikTok
+	$(JAVA) -cp bin Posts
 
 

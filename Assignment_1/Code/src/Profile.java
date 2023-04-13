@@ -1,7 +1,7 @@
 
 import java.util.*;
 
-import javax.lang.model.util.ElementScanner6;
+
 
 import java.io.*;  
 public class Profile {
@@ -77,7 +77,7 @@ public class Profile {
                 
                 System.out.println("Posts by: "+account.getAccountName());
                 if (b!=null)
-                    b.data.listAccountPosts(0,b.data.getAccountPosts().size()-1);
+                    b.data.listAccountPosts(0,b.data.getAccountPosts().length-1);
                 else
                     {
                         System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");
@@ -96,6 +96,10 @@ public class Profile {
                 String aName, title, video, likes;
                 System.out.println("Enter the account name:");
                 aName = input.nextLine();
+                if (tree.find(new Account(aName, null) ) == null)
+                {   System.out.println(aName+"'s Account does not exist!!!");
+                    createNewAccount();
+                }
 
                 System.out.println("Video Title:");
                 title = input.nextLine();
@@ -116,8 +120,8 @@ public class Profile {
                 node.data.addAccountPost(newPost);
                 System.out.println("New Post added by Account Name: "+account.getAccountName()+"\n"+ newPost); //selection statement for null
                 }
-                else 
-                    createNewAccount();
+                
+                    
 
                 
 
@@ -157,13 +161,13 @@ public class Profile {
     private  void populate() throws IOException
     {
 
-        FileReader file = new FileReader("dataset.txt");
+        FileReader file = new FileReader("/home/zwivhuya/School/CSC2001F/Assignments/DS/CSC2001F_Data_Structure/Assignment_1/Code/src/dataset.txt");
 
         BufferedReader br = new BufferedReader(file);
         
         String line = br.readLine();
 
-        while (line != null)
+        while (line !=null)
         {
             System.out.println(line); // shows what line is being processed
             if (line.substring(0, 6).equals("Create"))
@@ -171,11 +175,12 @@ public class Profile {
                 String accountDetails, description;
                 accountDetails = line.substring(7);
 
-                char[] chars = accountDetails.toCharArray();  //storing the account details into a char array
+                //char[] chars = accountDetails.toCharArray();  //storing the account details into a char array
+                
                 
                 int index = accountDetails.indexOf(" ");
 
-                String aName = accountDetails.substring(0, index);  
+                String aName = accountDetails.substring(0, index);
                 //System.out.println(aName);      
                 description = accountDetails.substring(index + 1); 
                 //System.out.println(description);
@@ -201,7 +206,7 @@ public class Profile {
 
                 accountDetails = line.substring(4);
 
-                char[] chars = accountDetails.toCharArray();  //storing the account details into a char array
+                //char[] chars = accountDetails.toCharArray();  //storing the account details into a char array
                 
                 int index1 = accountDetails.indexOf(" ");
 
@@ -223,8 +228,9 @@ public class Profile {
                 if ( node != null)
                 {
                     Posts newAccPost = new Posts(title, video, likes);
-                       if (!node.data.getAccountPosts().contains(newAccPost))
-                            node.data.addAccountPost(newAccPost); 
+
+                        
+                        node.data.addAccountPost(newAccPost); 
                     }
                 else
                     {
@@ -238,15 +244,18 @@ public class Profile {
 
                     }
                    
-                   // System.out.println(newPost+" Exists");
+                   
         }
 
-    
-    private  void descriptionFinder(String accName)
-    {   Account account = new Account(accName,"");
+    /*  The function looks for a description matching an account
+        if such an account does not exist it asks user if they want to create an account or not
+    */
+    private  void descriptionFinder(String accName) 
+    {   
+        Account account = new Account(accName,"");
         
         BinaryTreeNode<Account> foundAccount = tree.find(account);
-        //System.out.println(foundAccount.data.description);
+        
         if(foundAccount == null)
         {
 

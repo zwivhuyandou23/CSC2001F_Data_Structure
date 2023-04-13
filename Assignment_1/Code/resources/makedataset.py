@@ -4,7 +4,7 @@
 
 import random
 
-wordsfile = open ('/usr/share/dict/words', "r")
+wordsfile = open ('words.txt', "r")
 words = [a.rstrip ('\n') for a in wordsfile.readlines ()]
 wordsfile.close ()
 

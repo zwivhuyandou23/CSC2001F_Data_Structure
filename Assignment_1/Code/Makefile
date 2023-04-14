@@ -3,9 +3,11 @@
 # 12 April 2023
 
 JAVAC = /usr/bin/javac
+JAVACDOC = /usr/bin/javadoc
 .SUFFIXES: .java .class
 SRCDIR = src
 BINDIR = bin
+DOCDIR = doc
 
 $(BINDIR)/%.class: $(SRCDIR)/%.java
 	$(JAVAC) -d $(BINDIR) -cp $(BINDIR) $<
@@ -21,3 +23,6 @@ clean:
 
 run: $(CLASS_FILES)
 	java -cp bin TikTok
+
+javadoc:
+	$(JAVAC) -d $(DOCDIR) -sourcepath $(SRCDIR) -classpath $(BINDIR) $(SRCDIR)/*java

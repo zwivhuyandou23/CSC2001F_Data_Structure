@@ -4,7 +4,7 @@
 
 import random
 
-wordsfile = open ('words.txt', "r")
+wordsfile = open ('words', "r")
 words = [a.rstrip ('\n') for a in wordsfile.readlines ()]
 wordsfile.close ()
 

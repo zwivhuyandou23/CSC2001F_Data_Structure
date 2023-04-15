@@ -3,12 +3,12 @@
 # 29 March 2023
 
 import random
-
-wordsfile = open ('words', "r")
-words = [a.rstrip ('\n') for a in wordsfile.readlines ()]
-wordsfile.close ()
-
-namesfile = open ("names.txt", "r")
+#
+#wordsfile = open ('words.txt', "r")
+#words = [a.rstrip ('\n') for a in wordsfile.readlines ()]
+#wordsfile.close ()
+#
+namesfile = open ("/home/zwivhuya/School/CSC2001F/Assignments/DS/CSC2001F_Data_Structure/Assignment_1/Code/resources/names.txt", "r")
 names = [a.rstrip ('\n') for a in namesfile.readlines ()]
 namesfile.close ()
 
@@ -25,22 +25,20 @@ videonum=1
 
 for n in fullnames:
    newactions = []
-   newactions.append ('Create '+n+' '+' '.join (random.choice(words) for i in range(3)))
+   newactions.append (n+' '+' '.join (random.choice(n) for i in range(3)))
    for acts in range (random.randint (1, 30)):
       r = random.randint (0, 19)
       if r==0:
          x=1
-#         newactions.append ('Find '+n)
+         newactions.append ('Find '+n)
       elif r==1:
          x=1
-#         newactions.append ('List')
-      elif r<11:
-         newactions.append ('Add '+n+' video'+str(videonum)+'.mpg '+str(random.randint (0, 10000))+' '+' '.join (random.choice(words) for i in range(5)))
-         videonum+=1
+         newactions.append ('List')
+ 
       else:
          x=1
-#         newactions.append ('Display '+n)
-#   newactions.append ('Delete '+n)
+         newactions.append ('Display '+n)
+         newactions.append ('Delete '+n)
    
    oldactions = actions
    actions = []

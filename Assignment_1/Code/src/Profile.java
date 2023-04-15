@@ -20,12 +20,13 @@ public class Profile {
     public void startTikTok () throws IOException
     {
         while (true) {
-            System.out.println("Choose an action from the menu:\n1. Find the profile description for a given account\n2. List all accounts\n3. Create an account\n4. Delete an account\n5. Display all posts for a single account\n6. Add a new post for an account\n7. Load a file of actions from disk and process this\n8. List of Followers and Following for an an Account\n9. Add new Follower\n10. Add new Following\n11. Quit");
+            System.out.println()
+            System.out.println("Choose an action from the menu:\n1. Find the profile description for a given account\n2. List all accounts\n3. Create an account\n4. Delete an account\n5. Display all posts for a single account\n6. Add a new post for an account\n7. Load a file of actions from disk and process this\n8. List of Followers and Following for an Account\n9. Add new Follower\n10. Add new Following\n11. Quit");
             choice =  input.nextLine();       
             if (choice.equals("1")) 
             {
                 option1();   
-                System.out.println();   
+                ;   
             }
             else if (choice.equals("2"))
                 option2();
@@ -41,7 +42,11 @@ public class Profile {
                 option7();           
             else if (choice.equals("8")) 
                 option8();
-            else if (choice.equals("9"))
+            else if (choice.equals("9")) 
+                option9();
+            else if (choice.equals("10")) 
+                option10();
+            else if (choice.equals("11"))
             {
                 System.out.println("Done, Goodbye");
                 break;
@@ -213,7 +218,7 @@ public class Profile {
         BinaryTreeNode<Account> b =  tree.find(account);
         System.out.println("Posts by: "+account.getAccountName());
         if (b!=null)
-            b.data.listAccountPosts(0,b.data.getAccountPosts().length-1);
+            b.data.listAccountPosts();
         else
             {
                 System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");
@@ -266,17 +271,25 @@ public class Profile {
         populate();
         System.out.println("");
     }
-    private void option8()
+    private void option9()
     {
-        System.out.println("Enter Account Name: ");
+        System.out.println("Enter Account Name that has a new Follower: ");
         String aName = input.nextLine();
+
+        System.out.println("Enter Account Name that has started following: "+aName);
+        String fName = input.nextLine();
 
         Account newAccount = new Account(aName,null);
         BinaryTreeNode<Account> node = tree.find(newAccount);
 
+        Account newfollowerAccount = new Account(fName,null);
+        BinaryTreeNode<Account> node1 = tree.find(newfollowerAccount);
+
         if (node !=null)
-        
-            node.getNodeData().addNewFollower(newAccount);
+        {
+            node.getNodeData().addNewFollower(node1.getNodeData());
+            System.out.println(newAccount.getAccountName()+" has a new follower "+newfollowerAccount.getAccountName());
+        }
         else 
         {
             System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");
@@ -286,6 +299,36 @@ public class Profile {
                 createNewAccount();
         }
 
+    }
+    /**
+     * Executre option 8 instructions
+     */
+    private void option8()
+    {
+        System.out.println();
+        System.out.println("Enter the account name:");
+        String aName = input.nextLine();
+        Account account = new Account(aName,null); 
+        BinaryTreeNode<Account> b =  tree.find(account);
+        
+
+        if (b!=null)
+        {
+        
+        b.getNodeData().listAccountFollowers();
+        
+        }
+        else
+            {
+            System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");
+            String newAccountQuery = input.nextLine();
+                if(newAccountQuery.equals("y"))
+                    createNewAccount();
+            }
+    }
+    private void option10() 
+    {
+        
     }
     
 }

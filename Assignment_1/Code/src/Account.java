@@ -4,8 +4,9 @@ public class Account implements Comparable<Account>
 {
 
     private String accountName, description;
-    private int count = 1; //keeps count of no. of Posts objects in the accountPosts array
-    private Posts[] accountPosts = new Posts[1000]; //different way of storing accountPosts?
+    private int postCount = 1; //keeps postCount of no. of Posts objects in the accountPosts array
+    private int followerCount = 1;
+    private Posts[] accountPosts = new Posts[1_000]; //different way of storing accountPosts?
     private Account[] followers = new Account[1_000];
     private Account[] following = new Account[1_000];
     
@@ -55,13 +56,46 @@ public class Account implements Comparable<Account>
     */
     public int getNumberOfPosts()
     {
-        return count-1;
+        return postCount-1;
+    }
+    public int getNumberOfFollowers()
+    {
+        return followerCount-1;
+    }
+    public void listAccountFollowers() 
+    {
+        System.out.println("Followers: "+ getNumberOfFollowers());
+        listAccountFollowers(0, followers.length);
+
+    }
+    public void listAccountFollowers(int start, int stop)   
+    {   
+        
+        if (followers != null)
+        {
+            
+            if (followers[start] == null)  
+            {
+                
+                return;
+            }
+                              
+            else
+            {
+                System.out.println (followers[start].getAccountName());
+                listAccountFollowers(start+1, stop);
+            }
+        }
     }
     /**
      * recursicely prints out list of account posts
      * @param start
      * @param stop
      */
+    public void listAccountPosts()
+    {
+        listAccountPosts(0, followerCount-1);
+    }
     public void listAccountPosts(int start, int stop)
     {   
         if (accountPosts != null)
@@ -111,12 +145,12 @@ public class Account implements Comparable<Account>
             if (accountPosts == null)
             {
                 accountPosts[index] = p;
-                count++;
+                postCount++;
             }
             else if(accountPosts[index] == null)
             {
                 accountPosts[index] = p;
-                count++;
+                postCount++;
             }
             else
             {
@@ -171,12 +205,12 @@ public class Account implements Comparable<Account>
         if (followers == null)
         {
             followers[index] = a;
-            count++;
+            followerCount++;
         }
         else if(followers[index] == null)
         {
             followers[index] = a;
-            count++;
+            followerCount++;
         }
         else
         {

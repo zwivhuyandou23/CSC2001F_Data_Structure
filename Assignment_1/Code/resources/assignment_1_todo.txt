@@ -15,7 +15,7 @@ makefile, - sep folder for sep files i.e source, txt, class
 to-do :
 - return copies instead of original objects(privacy) possibly use clone method
 - make fields private
-
+- been able to process some line when a user input(not the dataset.txt file)
 - return copies of an object not the original object(Privac)
 
 - some code in choice blocks might have to be functions

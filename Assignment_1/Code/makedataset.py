@@ -27,20 +27,13 @@ videonum=1
 count = 0
 
 
-for i in range(int(len(fullnames) / 2)):
-   newactions = []
-
-   #newactions.append (n+' '+' '.join (random.choice(n) for i in range(3)))
-   for acts in range(100):
-      n = random.randint(0, int(len(fullnames) - 1))
-      r = random.randint(0, int(len(fullnames) - 1))
+for acts in range(1000):
+      n = random.randint(0, 900)
+      r = random.randint(0, 900)
       x = 1
-      if fullnames[i] != fullnames[n]:
-         newactions.append(fullnames[i] + ' Follows ' + fullnames[n])
-         print(fullnames[i] + ' Follows ' + fullnames[n])
-      count += 1
-      print(count)         
-         
+      if fullnames[r] != fullnames[n]:
+         newactions.append(fullnames[r] + ' Follows ' + fullnames[n])
+             
         
 AddToFile = []
    
@@ -50,9 +43,12 @@ for na in actions:
    
 newTest = open("dataset.txt", "a")
 
-for i in AddToFile:
+for i in newactions:
 
    newTest.write(i + "\n")
+   count += 1
+   print(i)
+   print(count)
 print("done")
    
 

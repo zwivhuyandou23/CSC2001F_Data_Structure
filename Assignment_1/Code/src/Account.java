@@ -63,14 +63,30 @@ public class Account implements Comparable<Account>
     {
         return followerCount-1;
     }
+    public int getNumberOfFollowing()
+    {
+        return followingCount-1;
+    }
+
     void addNewFollower(Account a)
     {   
         addNewFollower(a,0);
     }
     void addNewFollower(Account a,int index)
-    {
-        followers[followerCount-1] = a;
-        followerCount++; 
+    {   
+        for (Account i: followers)
+        {
+            if (i!=a)
+            {
+                followers[index] = a;
+                
+            }
+        }
+        
+        
+        followerCount++;
+
+         
  
     }
     void addNewFollowing(Account a)
@@ -80,31 +96,50 @@ public class Account implements Comparable<Account>
     void addNewFollowing(Account a,int index)
     {
         
-        following[followingCount-1] = a;
+        for (Account i: following)
+        {
+            if (i!=a)
+            {
+                following[index] = a;
+                
+            }
+        }
         followingCount++;
    
     }
     public void fullDescription() 
     {   
         
-        System.out.println("The profile description is: "+toString()+"\nFollowers: "+ getNumberOfFollowers());
-        fullDescription(0, followers.length-1);
-
+        
+        if (followerCount>followingCount)
+        {
+            fullDescription(0, getNumberOfFollowers());
+        }
+        else
+        {fullDescription(0, getNumberOfFollowing());}
     }
     public void fullDescription(int start, int stop)   
     {   
         
-        if (followers != null)
-        {
-            while (followers[start] !=null)
-            { 
-                System.out.println(followers[start]);
-                start++;
+         System.out.println("The profile description is: "+toString());
+            System.out.println("Followers: "+ getNumberOfFollowers());
+            for (Account i: followers)
+            {   
+                if (i!=null)
+                    System.out.println(i.getAccountName());
             }
-        }
+            System.out.println("\nFollowing: "+ getNumberOfFollowing());
+            for (Account i: following)
+            {   
+                if (i!=null)
+                    System.out.println(i.getAccountName());
+            }
+            
+            
+        
     }
     /**
-     * recursicely prints out list of account posts
+     * recursicely prints a list of an account posts
      * @param start
      * @param stop
      */
@@ -115,8 +150,7 @@ public class Account implements Comparable<Account>
     public void listAccountPosts(int start, int stop)
     {   
         if (accountPosts != null)
-        {
-            
+        {   
             if (accountPosts[start] == null)  
                 {
                 System.out.println("Total Number of posts: "+ getNumberOfPosts()+"\n");
@@ -128,12 +162,10 @@ public class Account implements Comparable<Account>
                 listAccountPosts (start+1, stop);
             }
 
-
         }
         else 
-        {
             System.out.println("No posts for "+getAccountName());
-        }
+        
     }
 
     /**
@@ -154,28 +186,12 @@ public class Account implements Comparable<Account>
     public void addAccountPost(Posts p, int index)
     {
         
-        if (postExists(p))
-            System.out.println("Post: \n"+ p+"exists!!!");
-        else
+        for (Posts i: accountPosts)
         {
-            if (accountPosts == null)
-            {
-                accountPosts[index] = p;
+            if (i != p)
+                accountPosts[index] =p;
                 postCount++;
-            }
-            else if(accountPosts[index] == null)
-            {
-                accountPosts[index] = p;
-                postCount++;
-            }
-            else
-            {
-                index++;
-                addAccountPost(p, index);
-            }
         }
-        
-
     }
 
     /**

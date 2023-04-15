@@ -202,7 +202,7 @@ public class Profile {
         {
             node.getNodeData().addNewFollower(node1.getNodeData());
             node1.getNodeData().addNewFollowing(node.getNodeData());
-            System.out.println(newAccount.getAccountName()+" has a new follower "+newfollowerAccount.getAccountName());
+            
         }
         else 
         {
@@ -287,7 +287,7 @@ public class Profile {
 
         
         newFollower = line.substring(9);
-        System.out.println(newFollowing+"\n"+newFollower);
+        //System.out.println(newFollowing+"\n"+newFollower);
         option8(newFollower, newFollowing);
 
     }

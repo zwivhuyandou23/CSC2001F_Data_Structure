@@ -6,6 +6,7 @@ public class Account implements Comparable<Account>
     private String accountName, description;
     private int postCount = 1; //keeps postCount of no. of Posts objects in the accountPosts array
     private int followerCount = 1;
+    private int followingCount = 1;
     private Posts[] accountPosts = new Posts[1_000]; //different way of storing accountPosts?
     private Account[] followers = new Account[1_000];
     private Account[] following = new Account[1_000];
@@ -201,10 +202,11 @@ public class Account implements Comparable<Account>
     }
     void addNewFollower(Account a,int index)
     {
-
+        
         if (followers == null)
         {
             followers[index] = a;
+            
             followerCount++;
         }
         else if(followers[index] == null)
@@ -219,6 +221,30 @@ public class Account implements Comparable<Account>
         }
     
 
+    }
+    void addNewFollowing(Account a)
+    {   
+        addNewFollowing(a,0);
+    }
+    void addNewFollowing(Account a,int index)
+    {
+        
+        if (following == null)
+        {
+            following[index] = a;
+            
+            followingCount++;
+        }
+        else if(following[index] == null)
+        {
+            following[index] = a;
+            followingCount++;
+        }
+        else
+        {
+            index++;
+            addNewFollowing(a, index);
+        }
     }
     
 

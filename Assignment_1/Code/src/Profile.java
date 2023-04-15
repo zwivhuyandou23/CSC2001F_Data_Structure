@@ -20,8 +20,8 @@ public class Profile {
     public void startTikTok () throws IOException
     {
         while (true) {
-            System.out.println()
-            System.out.println("Choose an action from the menu:\n1. Find the profile description for a given account\n2. List all accounts\n3. Create an account\n4. Delete an account\n5. Display all posts for a single account\n6. Add a new post for an account\n7. Load a file of actions from disk and process this\n8. List of Followers and Following for an Account\n9. Add new Follower\n10. Add new Following\n11. Quit");
+            System.out.println();
+            System.out.println("Choose an action from the menu:\n1. Find the profile description for a given account\n2. List all accounts\n3. Create an account\n4. Delete an account\n5. Display all posts for a single account\n6. Add a new post for an account\n7. Load a file of actions from disk and process this\n8. Add new Follower\n9. Automatically test (Delete Account, Display Description, Find Account, List Account Posts, Followers to be added )\n10. Quit");
             choice =  input.nextLine();       
             if (choice.equals("1")) 
             {
@@ -40,13 +40,15 @@ public class Profile {
                 option6();
             else if (choice.equals("7"))
                 option7();           
+            
             else if (choice.equals("8")) 
                 option8();
             else if (choice.equals("9")) 
                 option9();
-            else if (choice.equals("10")) 
-                option10();
-            else if (choice.equals("11"))
+               
+            
+            else if (choice.equals("10"))
+
             {
                 System.out.println("Done, Goodbye");
                 break;
@@ -174,13 +176,33 @@ public class Profile {
      * Executes option 1 instructions
      */
     private void option1()
-    {
+    {   
         System.out.println("");
         System.out.println("Enter the account name:");
 
         String aName = input.nextLine();
+
         System.out.println();
         descriptionFinder(aName);
+        System.out.println();
+        
+        Account account = new Account(aName,null); 
+        BinaryTreeNode<Account> b =  tree.find(account);
+        
+
+        if (b!=null)
+        {
+        
+        b.getNodeData().listAccountFollowers();
+        
+        }
+        else
+            {
+            System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");
+            String newAccountQuery = input.nextLine();
+                if(newAccountQuery.equals("y"))
+                    createNewAccount();
+            }
     }
     /*
      * Executes option 2 instructions
@@ -271,8 +293,13 @@ public class Profile {
         populate();
         System.out.println("");
     }
-    private void option9()
+    
+    /**
+     * Executre option 8 instructions
+     */
+    private void option8()
     {
+    
         System.out.println("Enter Account Name that has a new Follower: ");
         String aName = input.nextLine();
 
@@ -288,6 +315,7 @@ public class Profile {
         if (node !=null)
         {
             node.getNodeData().addNewFollower(node1.getNodeData());
+            node1.getNodeData().addNewFollowing(node.getNodeData());
             System.out.println(newAccount.getAccountName()+" has a new follower "+newfollowerAccount.getAccountName());
         }
         else 
@@ -298,35 +326,9 @@ public class Profile {
             if(newAccountQuery.equals("y"))
                 createNewAccount();
         }
-
+        
     }
-    /**
-     * Executre option 8 instructions
-     */
-    private void option8()
-    {
-        System.out.println();
-        System.out.println("Enter the account name:");
-        String aName = input.nextLine();
-        Account account = new Account(aName,null); 
-        BinaryTreeNode<Account> b =  tree.find(account);
-        
-
-        if (b!=null)
-        {
-        
-        b.getNodeData().listAccountFollowers();
-        
-        }
-        else
-            {
-            System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");
-            String newAccountQuery = input.nextLine();
-                if(newAccountQuery.equals("y"))
-                    createNewAccount();
-            }
-    }
-    private void option10() 
+    private void option9() 
     {
         
     }

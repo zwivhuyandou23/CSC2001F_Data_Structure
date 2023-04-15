@@ -13,6 +13,7 @@ challenges:
 makefile, - sep folder for sep files i.e source, txt, class
 
 to-do :
+-  add insta like following follower format
 - return copies instead of original objects(privacy) possibly use clone method
 - make fields private
 - been able to process some line when a user input(not the dataset.txt file)

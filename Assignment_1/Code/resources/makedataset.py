@@ -8,7 +8,7 @@ import random
 #words = [a.rstrip ('\n') for a in wordsfile.readlines ()]
 #wordsfile.close ()
 #
-namesfile = open ("/home/zwivhuya/School/CSC2001F/Assignments/DS/CSC2001F_Data_Structure/Assignment_1/Code/resources/names.txt", "r")
+namesfile = open("names.txt", "r")
 names = [a.rstrip ('\n') for a in namesfile.readlines ()]
 namesfile.close ()
 
@@ -33,7 +33,7 @@ for n in fullnames:
          newactions.append ('Find '+n)
       elif r==1:
          x=1
-         newactions.append ('List')
+         newactions.append('List ' + n)
  
       else:
          x=1
@@ -50,6 +50,18 @@ for n in fullnames:
       else:
          actions.append (newactions.pop(0))
    actions += oldactions + newactions      
+AddToFile = []
    
 for na in actions:
-   print (na)
+
+   if na[0:3] == "Dis" or na[0:3] == "Del" or na[0:3] == "Fin" or na[0:3] == "Lis":
+      #print(na)
+      AddToFile.append(na)
+newTest = open("functionTest.txt", "w")
+count = 0
+for i in AddToFile:
+
+   newTest.write(i + "\n")
+   count += 1
+   print(i, count)
+

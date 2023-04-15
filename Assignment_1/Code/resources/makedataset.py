@@ -14,54 +14,45 @@ namesfile.close ()
 
 duplicates = 10
 fullnames = []
-
-for i in range(duplicates):
+for i in range(10):
+    
    for n in names:
+      print(n+str(i))
+      
       fullnames.append (n+str(i))
 
 actions = []
 newactions = []
 videonum=1
+count = 0
 
-for n in fullnames:
+
+for i in range(int(len(fullnames) / 2)):
    newactions = []
-   newactions.append (n+' '+' '.join (random.choice(n) for i in range(3)))
-   for acts in range (random.randint (1, 30)):
-      r = random.randint (0, 19)
-      if r==0:
-         x=1
-         newactions.append ('Find '+n)
-      elif r==1:
-         x=1
-         newactions.append('List ' + n)
- 
-      else:
-         x=1
-         newactions.append ('Display '+n)
-         newactions.append ('Delete '+n)
-   
-   oldactions = actions
-   actions = []
-   lenoldactions = len(oldactions)
-   lennewactions = len(newactions)
-   while (len(oldactions)>0 and len(newactions)>0):
-      if (random.randint (1, lenoldactions+lennewactions) <= lenoldactions):
-         actions.append (oldactions.pop(0))
-      else:
-         actions.append (newactions.pop(0))
-   actions += oldactions + newactions      
+
+   #newactions.append (n+' '+' '.join (random.choice(n) for i in range(3)))
+   for acts in range(100):
+      n = random.randint(0, int(len(fullnames) - 1))
+      r = random.randint(0, int(len(fullnames) - 1))
+      x = 1
+      if fullnames[i] != fullnames[n]:
+         newactions.append(fullnames[i] + ' Follows ' + fullnames[n])
+         print(fullnames[i] + ' Follows ' + fullnames[n])
+      count += 1
+      print(count)         
+         
+        
 AddToFile = []
    
 for na in actions:
 
-   if na[0:3] == "Dis" or na[0:3] == "Del" or na[0:3] == "Fin" or na[0:3] == "Lis":
-      #print(na)
-      AddToFile.append(na)
-newTest = open("functionTest.txt", "w")
-count = 0
+   AddToFile.append(na)
+   
+newTest = open("dataset.txt", "a")
+
 for i in AddToFile:
 
    newTest.write(i + "\n")
-   count += 1
-   print(i, count)
+print("done")
+   
 

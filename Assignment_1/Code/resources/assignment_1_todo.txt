@@ -13,6 +13,7 @@ challenges:
 makefile, - sep folder for sep files i.e source, txt, class
 
 to-do :
+- 1. should include the below todo
 -  add insta like following follower format
 - return copies instead of original objects(privacy) possibly use clone method
 - make fields private

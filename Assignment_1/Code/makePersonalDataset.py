@@ -27,12 +27,21 @@ videonum=1
 count = 0
 
 
-for acts in range(5000):
+for acts in range(20):
       n = random.randint(0, 929)
       r = random.randint(0, 929)
-      x = 1
-      if fullnames[r] != fullnames[n]:
-         newactions.append(fullnames[r] + ' Follows ' + fullnames[n])
+      x = random.randint(0,3)
+      if x==1:
+         x
+         newactions.append ('Find '+fullnames[r]+" description")
+      elif x==2:
+ 
+         newactions.append ('Display '+fullnames[r]+" Posts")
+         
+      else:
+         newactions.append ('Delete '+fullnames[n])
+     
+         
              
         
 AddToFile = []
@@ -41,14 +50,15 @@ for na in actions:
 
    AddToFile.append(na)
    
-newTest = open("dataset.txt", "a")
+newTest = open("commandsList.txt", "w")
 
 for i in newactions:
 
    newTest.write(i + "\n")
-   count += 1
+   
    print(i)
    print(count)
+   count += 1
 print("done")
    
 

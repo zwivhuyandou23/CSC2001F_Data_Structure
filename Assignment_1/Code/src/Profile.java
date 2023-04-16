@@ -21,7 +21,7 @@ public class Profile {
     {
         while (true) {
             System.out.println();
-            System.out.println("Choose an action from the menu:\n1. Find the profile description for a given account\n2. List all accounts\n3. Create an account\n4. Delete an account\n5. Display all posts for a single account\n6. Add a new post for an account\n7. Load a file of actions from disk and process this\n8. Add new Follower\n9. Automatically test (Delete Account, Display Description, Find Account, List Account Posts, Followers to be added )\n10. Quit");
+            System.out.println("Choose an action from the menu:\n1. Find the profile description for a given account\n2. List all accounts\n3. Create an account\n4. Delete an account\n5. Display all posts for a single account\n6. Add a new post for an account\n7. Load a file of actions from disk and process this\n8. Add new Follower\n9. Delete Account Follower \n10. Automatically test (Delete <Account Name>, Display <Account Name>, Find <Account Name>, List Account Posts) from File\n11. Quit");
             choice =  input.nextLine();       
             if (choice.equals("1")) 
             {
@@ -49,11 +49,15 @@ public class Profile {
             String fName = input.nextLine();
                 option8(aName,fName);
             }
-            else if (choice.equals("9")) 
+            else if(choice.equals("9"))
+            {
                 option9();
+            }
+            else if (choice.equals("10")) 
+                option10();
                
             
-            else if (choice.equals("10"))
+            else if (choice.equals("11"))
 
             {
                 System.out.println("Done, Goodbye");
@@ -64,6 +68,8 @@ public class Profile {
         }
     } 
     
+    
+
     /*
      * Executes option 1 instructions
      */
@@ -91,7 +97,7 @@ public class Profile {
         }
         else
             {
-            System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");
+            System.out.println("Account "+aName+" Does not Exist"+"\nWould you like to create an account?[y/n]");
             String newAccountQuery = input.nextLine();
                 if(newAccountQuery.equals("y"))
                     createNewAccount();
@@ -117,9 +123,15 @@ public class Profile {
 
         
         Account oldAccount = new Account(aName,null);
-        tree.delete(oldAccount);
+        if (tree.find(oldAccount)!= null)
+        {
+            tree.delete(oldAccount);
+
+        System.out.println("Account: "+aName+ " has been removed.");
+        }
+        else
         
-        System.out.println("Account: "+aName+ " has been removed.");  
+            System.out.println("Account"+aName+" Does Not Exists");
     }
     /*
      * Executes option 5 instructions
@@ -136,7 +148,7 @@ public class Profile {
             b.data.listAccountPosts();
         else
             {
-                System.out.println("Account "+aName+"Does not Exist"+"\nWould you like to create an account?[y/n]");
+                System.out.println("Account "+aName+" Does not Exist"+"\nWould you like to create an account?[y/n]");
                 String newAccountQuery = input.nextLine();
 
                 if(newAccountQuery.equals("y"))
@@ -216,7 +228,103 @@ public class Profile {
     }
     private void option9() 
     {
+        String unfollowedAcc, unfollowingAcc;
+        System.out.println("Enter the account name that has been unfollowed:");
+        unfollowedAcc = input.nextLine();
+
+        System.out.println("Enter the account name that unfollowed "+unfollowedAcc+": ");
+        unfollowingAcc = input.nextLine();
+
+        Account feAccount = new Account(unfollowedAcc,"");
+        Account unAccount = new Account(unfollowingAcc,"");
         
+        BinaryTreeNode<Account> node = tree.find(feAccount);
+        BinaryTreeNode<Account> node1 = tree.find(unAccount);
+
+        
+        if (node == null ){
+
+            System.out.println("Account "+feAccount+" does not exist");
+        } 
+        if (node1 == null ){
+
+            System.out.println("Account "+unAccount+" does not exist");
+        } 
+        else
+        {
+            node.getNodeData().getAccountFollowers().remove(node1.getNodeData());
+            node1.getNodeData().getAccountFollowing().remove(node.getNodeData());
+        }
+        
+
+
+
+    }
+    private void option10() throws IOException 
+    {
+        FileReader file = new FileReader("commandsList.txt");
+
+        BufferedReader br = new BufferedReader(file);
+        
+        String line = br.readLine();
+        
+        while (line !=null)
+
+        
+        {
+            System.out.println(line);
+            if (line.substring(0, 4).equalsIgnoreCase("Find") )
+            {
+                //System.out.println();
+                String aName = line.substring(5,line.indexOf("description")-1);
+                Account oldAccount = new Account(aName,null);
+                BinaryTreeNode<Account> node = tree.find(oldAccount);
+                if(node != null)
+                {
+                  node.getNodeData().fullDescription();  
+                }
+                else
+                    System.out.println(aName+" does not exist\n");
+            
+            }
+            else if(line.substring(0, 6).equalsIgnoreCase("Delete") )
+            {   
+                String aName = line.substring(7);
+                //System.out.println(aName);
+                Account oldAccount = new Account(aName,null);
+                BinaryTreeNode<Account> node = tree.find(oldAccount);
+                if (node != null)
+                {
+                    tree.delete(node.data);
+        
+                    System.out.println("Account: "+aName+ " has been removed.\n");
+                }
+                else
+                
+                    {System.out.println("Account"+aName+" Does Not Exists\n");}
+            }
+            else if (line.substring(0, 7).equalsIgnoreCase("Display"))
+            {
+                String aName = line.substring(8, line.indexOf("Posts")-1);
+                //System.out.println(aName);
+                Account oldAccount = new Account(aName,null);
+                BinaryTreeNode<Account> node = tree.find(oldAccount);
+                //System.out.println(node.data);
+                if (node != null)
+                {
+                    node.getNodeData().listAccountPosts();
+                }
+                else
+                
+                    {System.out.println("Account "+aName+" Does Not Exists");}
+
+            }
+        line = br.readLine(); 
+        
+        }
+        
+    
+    br.close();
     }
     /*Create a new account */
     private void createNewAccount()
@@ -248,7 +356,7 @@ public class Profile {
         while (line !=null)
         {
             System.out.println(line); // shows what line is being processed
-            if (line.substring(0, 6).equals("Create"))
+            if (line.substring(0, 6).equalsIgnoreCase("Create"))
             {
                 String accountDetails, description;
                 accountDetails = line.substring(7);
@@ -259,20 +367,22 @@ public class Profile {
                 
                 description = accountDetails.substring(index + 1);
                 tree.insert(new Account(aName, description));
-                line = br.readLine();
+                
             }
-            else if (line.substring(0, 3).equals("Add")) 
+            else if (line.substring(0, 3).equalsIgnoreCase("Add")) 
             {   
                 newPost(line);
-                line = br.readLine();
+                
             }
             else
             {
                 addFileFollower(line);
-            line = br.readLine();
+            
             }
+            line = br.readLine();
                         
         }
+
         System.out.println("\nDataset populated!!!");
         br.close();
     }

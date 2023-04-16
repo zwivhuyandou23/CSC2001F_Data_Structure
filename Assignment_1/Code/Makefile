@@ -20,9 +20,10 @@ default: $(CLASS_FILES)
 
 clean:
 	rm $(BINDIR)/*.class
+javadoc:
+	$(JAVAC) -d $(DOCDIR) -sourcepath $(SRCDIR) -classpath $(BINDIR) $(SRCDIR)/*java
 
 run: $(CLASS_FILES)
 	java -cp bin TikTok
 
-javadoc:
-	$(JAVAC) -d $(DOCDIR) -sourcepath $(SRCDIR) -classpath $(BINDIR) $(SRCDIR)/*java
+

@@ -1,26 +1,21 @@
-
+import java.util.ArrayList;
 
 public class Account implements Comparable<Account>
 {
 
     private String accountName, description;
-    private int postCount = 1; //keeps postCount of no. of Posts objects in the accountPosts array
-    private int followerCount = 1;
-    private int followingCount = 1;
-    private Posts[] accountPosts = new Posts[100]; //different way of storing accountPosts?
-    private Account[] followers = new Account[1_000];
-    private Account[] following = new Account[1_000];
+    private ArrayList<Posts> accountPosts = new ArrayList<Posts>(); //different way of storing accountPosts?
+    private ArrayList<Account> followers = new ArrayList<Account>();
+    private ArrayList<Account> following = new ArrayList<Account>();
     
     public Account(String a, String d)
     {
         accountName = a;
-        description = d;
-        
+        description = d; 
     }
     public Account(Account d){
         this.accountName = d.accountName;
         this.description = d.description;
-
     }
     /**
      * 
@@ -28,10 +23,7 @@ public class Account implements Comparable<Account>
      * returns copy of accountName
     */
     public String getAccountName() 
-    {
-
-        return new String(accountName);
-    }
+    { return new String(accountName);}
     /**
      * 
      * @return 
@@ -46,10 +38,21 @@ public class Account implements Comparable<Account>
      * @return 
      * returns copy of accountPost array
     */
-    public Posts[] getAccountPosts() 
+    public ArrayList<Posts> getAccountPosts() 
     {
-        return accountPosts.clone();
+        return accountPosts;
     }
+
+    public ArrayList<Account> getAccountFollowers()
+    {
+        return followers;
+    }
+
+    public ArrayList<Account> getAccountFollowing()
+    {
+        return following;
+    }
+    
     /**
      * 
      * @return 
@@ -57,70 +60,37 @@ public class Account implements Comparable<Account>
     */
     public int getNumberOfPosts()
     {
-        return postCount-1;
+        return accountPosts.size();
     }
     public int getNumberOfFollowers()
     {
-        return followerCount-1;
+        return followers.size();
     }
     public int getNumberOfFollowing()
     {
-        return followingCount-1;
+        return following.size();
     }
+
 
     void addNewFollower(Account a)
     {   
-        addNewFollower(a,0);
-    }
-    void addNewFollower(Account a,int index)
-    {   
-        for (Account i: followers)
-        {
-            if (i!=a)
-            {
-                followers[index] = a;
-                
-            }
-        }
-        
-        
-        followerCount++;
-
+        if (!followers.contains(a))
+                followers.add(a);
+        else 
+            System.out.println("Follower Already Exists\n");
          
- 
     }
     void addNewFollowing(Account a)
     {   
-        addNewFollowing(a,0);
-    }
-    void addNewFollowing(Account a,int index)
-    {
-        
-        for (Account i: following)
-        {
-            if (i!=a)
-            {
-                following[index] = a;
-                
-            }
-        }
-        followingCount++;
+        if (!following.contains(a))
+                following.add(a);
    
+        
     }
+
     public void fullDescription() 
     {   
-        
-        
-        if (followerCount>followingCount)
-        {
-            fullDescription(0, getNumberOfFollowers());
-        }
-        else
-        {fullDescription(0, getNumberOfFollowing());}
-    }
-    public void fullDescription(int start, int stop)   
-    {   
-        
+    
          System.out.println("The profile description is: "+toString());
             System.out.println("Followers: "+ getNumberOfFollowers());
             for (Account i: followers)
@@ -133,38 +103,7 @@ public class Account implements Comparable<Account>
             {   
                 if (i!=null)
                     System.out.println(i.getAccountName());
-            }
-            
-            
-        
-    }
-    /**
-     * recursicely prints a list of an account posts
-     * @param start
-     * @param stop
-     */
-    public void listAccountPosts()
-    {
-        listAccountPosts(0, followerCount-1);
-    }
-    public void listAccountPosts(int start, int stop)
-    {   
-        if (accountPosts != null)
-        {   
-            if (accountPosts[start] == null)  
-                {
-                System.out.println("Total Number of posts: "+ getNumberOfPosts()+"\n");
-                return; 
-                }                 
-            else
-            {
-                System.out.println (accountPosts[start]);
-                listAccountPosts (start+1, stop);
-            }
-
-        }
-        else 
-            System.out.println("No posts for "+getAccountName());
+            }     
         
     }
 
@@ -174,62 +113,42 @@ public class Account implements Comparable<Account>
      */
     public void addAccountPost(Posts p)
     {
-        
-       addAccountPost(p,0);
-
+            if (!accountPosts.contains(p))
+                accountPosts.add(p);
+            else 
+                System.out.println("Post Already Exists\n"+p);
     }
+
     /**
-     * insert account post into accountPosts array
-     * @param p
-     * @param index
+     * recursicely prints a list of an account posts
+     * @param start
+     * @param stop
      */
-    public void addAccountPost(Posts p, int index)
+
+     
+
+    public void listAccountPosts()
     {
-        
-        for (Posts i: accountPosts)
-        {
-            if (i != p)
-                accountPosts[index] =p;
-                postCount++;
+       
+        if (accountPosts != null )
+        {   
+           for (Posts i: accountPosts)
+           {    
+                System.out.println(i);
+            
+           }
         }
+        else 
+            System.out.println("No posts for "+getAccountName());
+        
     }
 
+    
     /**
      * checks if an account post already exists of the same title
      * @param p
      * @return
      */
-    public boolean postExists(Posts p)
-    {
-        return postExists(p, 0);
-    }
-    private boolean postExists(Posts p, int index)
-    {
-        boolean a = false;
-        if ((getNumberOfPosts()>1)  )
-        {   
-            if (accountPosts[index] == null)
-                return false;    
-            else if (p.getTitle().equals(accountPosts[index].getTitle()))
-            {
-                a  = true;
-                return a;
-            }
-            
-            else
-            {   index++;
-                postExists(p, index);
-            }
-        }
-        else
-            a = false;
-        
-        return a;
-    }
-
-    
-    
-
     @Override
     public int compareTo(Account other) 
     {
@@ -241,6 +160,4 @@ public class Account implements Comparable<Account>
 
         return getAccountName()+" "+getAccountDescription();
     }
-
 }
-

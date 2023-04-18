@@ -8,69 +8,102 @@ public class Account implements Comparable<Account>
     private ArrayList<Account> followers = new ArrayList<Account>();
     private ArrayList<Account> following = new ArrayList<Account>();
     
+    /**
+     * Initializes the accountName and descriptions instances
+     * @param a
+     * @param d
+     * Takes in String instance a and d.
+     */
     public Account(String a, String d)
     {
         accountName = a;
         description = d; 
     }
-    public Account(Account d){
-        this.accountName = d.accountName;
-        this.description = d.description;
+    /**
+     * Copies other Account instance data and initialises them into this account instances
+     * @param other
+     * Takes in other Account instance
+     */
+    public Account(Account other){
+        this.accountName = other.accountName;
+        this.description = other.description;
     }
     /**
-     * 
+     * A get method for account name
      * @return 
-     * returns copy of accountName
+     * Copy of accountName
     */
     public String getAccountName() 
     { return new String(accountName);}
     /**
-     * 
+     * A get method for account description
      * @return 
-     * returns copy of account description
+     * Copy of account description
     */
     public String getAccountDescription(){
 
         return new String(description);
     }
     /**
-     * 
+     * A get method for accountPosts lis
      * @return 
-     * returns copy of accountPost array
+     * A shallow copy of this account list of Posts 
     */
     public ArrayList<Posts> getAccountPosts() 
     {
         return accountPosts;
     }
-
+    /**
+     * A get method for followers list
+     * @return
+     * A list of other accounts that follow this account
+     */
     public ArrayList<Account> getAccountFollowers()
     {
         return followers;
     }
-
+    /**
+     * A get method for following list
+     * @return
+     * A list of other accounts that this account follows
+     */
     public ArrayList<Account> getAccountFollowing()
     {
         return following;
     }
     
     /**
-     * 
+     * A get method for accountPosts size
      * @return 
-     * returns number of posts in an account
+     * Number of posts in this account
     */
     public int getNumberOfPosts()
     {
         return accountPosts.size();
     }
+    /**
+     * A get method for followers size
+     * @return 
+     * Number of this account followers 
+     */
     public int getNumberOfFollowers()
     {
         return followers.size();
     }
+    /**
+     * A get method for following size
+     * @return 
+     * Number of other accounts following this account
+     */
     public int getNumberOfFollowing()
     {
         return following.size();
     }
-
+    /**
+     * Adds the other account that has started to follow by this account
+     * @param a
+     * Takes in an Account object
+     */
 
     void addNewFollower(Account a)
     {   
@@ -80,6 +113,11 @@ public class Account implements Comparable<Account>
             System.out.println("Follower Already Exists\n");
          
     }
+    /**
+     * Adds the other account that has started following this account
+     * @param a
+     * Takes in an Account object;
+     */
     void addNewFollowing(Account a)
     {   
         if (!following.contains(a))
@@ -87,6 +125,9 @@ public class Account implements Comparable<Account>
    
         
     }
+    /**
+     * Prints the full description of an account including its followers and other account it follows
+     */
 
     public void fullDescription() 
     {   
@@ -108,8 +149,9 @@ public class Account implements Comparable<Account>
     }
 
     /**
-     * 
+     * Add a Posts object into the accountPosts list if it doesn't already exist.
      * @param p
+     * Takes in Posts p object
      */
     public void addAccountPost(Posts p)
     {
@@ -120,13 +162,9 @@ public class Account implements Comparable<Account>
     }
 
     /**
-     * recursicely prints a list of an account posts
-     * @param start
-     * @param stop
+     * Recursicely prints a list of an account posts
+     * 
      */
-
-     
-
     public void listAccountPosts()
     {
        
@@ -145,9 +183,15 @@ public class Account implements Comparable<Account>
 
     
     /**
-     * checks if an account post already exists of the same title
-     * @param p
+     * Checks if this account name equals the other account name in alphanumerical order
+     * @param other
+     * Take in an other Account instance variable
+     * 
      * @return
+     * The value 0 if this Account equals other Account in alphanumerical order
+     * A value less than 0 if this Account is less than other Account in alphanumerical order
+     * A value greater than 0 if this Account is less than other Account in alphanumerical order
+     * 
      */
     @Override
     public int compareTo(Account other) 
@@ -155,6 +199,10 @@ public class Account implements Comparable<Account>
         return (this.accountName).compareTo(other.accountName);
         
     }
+    /**
+     * Return string representation of the Account object
+     */
+    @Override
     public String toString()
     {
 

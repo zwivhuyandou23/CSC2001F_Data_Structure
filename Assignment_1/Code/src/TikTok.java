@@ -2,6 +2,10 @@ import java.io.IOException;
 
 public class TikTok {
 
+    /**
+     * The main Function initiates the TikTok interface
+     * @param args
+     */
     public static void main(String[] args)
     {
 
@@ -10,7 +14,7 @@ public class TikTok {
             tiktok.startTikTok();
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+        
             e.printStackTrace();
         }
         

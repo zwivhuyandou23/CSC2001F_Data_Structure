@@ -31,6 +31,7 @@ to-do :
 
 
 To add on report:
+- use imgur for screenshots
 - If account name exists already, it blocks user from creating a different account with same accountName
 - tiktok does alow user to post a new post that has an identical title and same video but no of likes may vary.
 

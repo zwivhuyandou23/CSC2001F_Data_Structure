@@ -4,7 +4,9 @@ class BinarySearchTree
 {
 
    BinaryTreeNode<Account> root;
- 
+    /**
+     * Initializes the BinaryTreeNode<Account> root
+     */
     public BinarySearchTree ()
     {
     root = null;
@@ -13,11 +15,19 @@ class BinarySearchTree
     /**
      * Returs height of the BST
      * @return
+     * Value of the BST height
      */
     public int getHeight ()//return height of the binary tree
       {
       return getHeight (root);
       } 
+      /**
+       * Returs height of the BST
+       * @param node
+       * Takes in BinaryTreeNode<Account> instance
+       * @return
+       *  Value of the BST height
+       */
     public int getHeight ( BinaryTreeNode<Account>node )
       {
       if (node == null)
@@ -26,14 +36,22 @@ class BinarySearchTree
         return 1 + Math.max (getHeight (node.getLeft ()), getHeight (node.getRight ()));
       }
     /**
-     * returns size of tree i.e total number of nodes(Accounts)
+     * Calls the size(BinaryTreeNode<Account> node) method
      * @return
+     * Value of the BST size
      */
     public int size()
     {
       return size(root);
 
     }
+    /**
+     * Count the size of the BST
+     * @param node
+     * Take in a BinaryTreeNode<Account> node
+     * @return
+     * Value of the BST sizze
+     */
     public int size(BinaryTreeNode<Account> node)
     {
 
@@ -47,7 +65,8 @@ class BinarySearchTree
     }
     /**
      * Compares new Account with existing accounts 
-     * and creates a node and inserts an account into the BST nod
+     * creates a node
+     * inserts an account into that node
      * @param d
      */
     public void insert(Account d)
@@ -67,7 +86,17 @@ class BinarySearchTree
       {
         System.out.println("Account Name: "+d.getAccountName()+" "+"already exists!!!");
       }
+   
     }
+    /**
+     * Compares new Account with existing accounts 
+     * creates a node
+     * inserts an account into that node
+     * @param d
+     * Takes in an Account instance
+     * @param node
+     * Takes in a BinaryTreeNode<Account> instance
+     */
     public void insert(Account d, BinaryTreeNode<Account> node)
     {
       if (d.compareTo(node.data)<=0)
@@ -92,14 +121,24 @@ class BinarySearchTree
 
     }
     /**
-     * deletes a node containing the given account
+     * Calls the BinaryTreeNode<Account> delete(Account d, BinaryTreeNode<Account> node) method
      * @param d
+     * Takes in an Account instance
      */
+    
     public void delete(Account d)
     {
        
           delete(d, root);
     }
+    /**
+     * Deletes a node with account d data.
+     * @param d
+     * BinaryTreeNode<Account> instance
+     * @param node
+     * BinaryTreeNode<Account> node
+     * @return
+     */
     public BinaryTreeNode<Account> delete(Account d, BinaryTreeNode<Account> node)
     { 
       if (node == null)
@@ -128,9 +167,11 @@ class BinarySearchTree
     return node;   
     }
     /**
-     * finds the least/smallest node in the far left leaf
+     * Finds the least/smallest node in the far left leaf
      * @param node
+     * Takes in BinaryTreeNode<Account> instance
      * @return
+     * BinaryTreeNode<Account> node
      */
     public BinaryTreeNode<Account> findMin(BinaryTreeNode<Account> node)
     {
@@ -144,9 +185,11 @@ class BinarySearchTree
 
     }
     /**
-     * removes the smallest leaf in the BST
+     * removes the smallest leaf node in the BST
      * @param node
+     * Takes in BinaryTreeNode<Account> instance
      * @return
+     * BinaryTreeNode<Account> node
      */
     public BinaryTreeNode<Account> removeMin(BinaryTreeNode<Account> node)
 
@@ -156,23 +199,39 @@ class BinarySearchTree
       else if (node.left != null)
       {
         node = findMin(node.left);
-        return node; // if we find node.left as min no. we return its parent node "node"
+        return node; 
       }
       else 
         return node.right;
 
     }
     /**
-     * finds node containing the given account
+     * Calls the find(Account d, BinaryTreeNode<Account> node) method
+     * 
      * @param d
+     * Takes in Account object
      * @return
+     * BinaryTreeNode<Account> node
      */
   public BinaryTreeNode<Account> find ( Account d )
   {
     if (root == null)
       return null;
     else
-      return find (d, root);    }
+      return find (d, root);    
+    }
+    /**
+     * Finds a node containing the given account
+     * @param d
+     * Takes in an Account instance
+     * @param node
+     * Takes in BinaryTreeNode<Account> instance
+     * @return
+     * BinaryTreeNode<Account> node
+     * @
+     * 
+     * @return
+     */
   public BinaryTreeNode<Account> find ( Account d, BinaryTreeNode<Account> node )
   {
     int cmp = d.compareTo (node.data);
@@ -190,14 +249,20 @@ class BinarySearchTree
 }
 
   /**
-   * Recursively prints all account details
+   * Calls the getListOfAccounts(BinaryTreeNode<Account> node)
+   * Prints the number of accounts
    */
  void getListOfAccounts()
  {  
   getListOfAccounts(root);
   System.out.println("Total Number of Accounts: "+size()+".\n");
  }
- void getListOfAccounts(BinaryTreeNode<Account> node) // uses preorder algorithm
+ /**
+  * Recursively prints all account details using preorder algorithm
+  * @param node
+  * Takes in an instance of BinaryTreeNode<Account>
+  */
+ void getListOfAccounts(BinaryTreeNode<Account> node) 
    {
     
      if (node != null)

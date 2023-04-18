@@ -6,17 +6,20 @@ public class Profile {
     BinarySearchTree tree;
     Scanner input;
     String choice;
-
+    /**
+     * Initializes the BST and the user input Scanner 
+     */
     public Profile()
     {
     tree = new BinarySearchTree();
     input = new Scanner(System.in);
-     // throw exception if it's a string
+     
 
     }
 
-    /* The function starts the whole user interface when it is called from the main class
-    */
+    /**
+     * The function starts the whole user interface when it is called from the main function from the main class.
+     */
     public void startTikTok () throws IOException
     {
         while (true) {
@@ -24,10 +27,7 @@ public class Profile {
             System.out.println("Choose an action from the menu:\n1. Find the profile description for a given account\n2. List all accounts\n3. Create an account\n4. Delete an account\n5. Display all posts for a single account\n6. Add a new post for an account\n7. Load a file of actions from disk and process this\n8. Add new Follower\n9. Delete Account Follower \n10. Automatically test (Delete <Account Name>, Display <Account Name>, Find <Account Name>, List Account Posts) from File\n11. Quit");
             choice =  input.nextLine();       
             if (choice.equals("1")) 
-            {
                 option1();   
-                 
-            }
             else if (choice.equals("2"))
                 option2();
             else if (choice.equals("3"))
@@ -40,7 +40,6 @@ public class Profile {
                 option6();
             else if (choice.equals("7"))
                 option7();           
-            
             else if (choice.equals("8")) {
             System.out.println("Enter Account Name that has a new Follower: ");
             String aName = input.nextLine();
@@ -50,15 +49,10 @@ public class Profile {
                 option8(aName,fName);
             }
             else if(choice.equals("9"))
-            {
                 option9();
-            }
             else if (choice.equals("10")) 
                 option10();
-               
-            
             else if (choice.equals("11"))
-
             {
                 System.out.println("Done, Goodbye");
                 break;
@@ -71,7 +65,7 @@ public class Profile {
     
 
     /*
-     * Executes option 1 instructions
+     * Executes option 1 instructions from user TikTok interface
      */
     private void option1()
     {   
@@ -104,7 +98,7 @@ public class Profile {
             }
     }
     /*
-     * Executes option 2 instructions
+     * Executes option 2 instructions from user TikTok interface
      */
     private void option2() 
     {
@@ -113,7 +107,7 @@ public class Profile {
         System.out.println();
     }
     /*
-     * Executes option 4 instructions
+     * Executes option 4 instructions from user TikTok interface
      */
     private void option4() 
     {
@@ -133,8 +127,8 @@ public class Profile {
         
             System.out.println("Account"+aName+" Does Not Exists");
     }
-    /*
-     * Executes option 5 instructions
+    /**
+     * Executre option 5 instructions from user TikTok interface
      */
     private void option5() 
     {
@@ -155,8 +149,8 @@ public class Profile {
                     createNewAccount();
             }
     }
-    /*
-     * Executes option 6 instructions
+    /**
+     * Executre option 6 instructions from user TikTok interface
      */
     private void option6() 
     {
@@ -189,7 +183,9 @@ public class Profile {
         }
     }
     /**
-     * Executes option 7 instructions
+     * 
+     * Executre option 7 instructions from user TikTok interface
+     *
      * @throws IOException
      */
     private void option7() throws IOException 
@@ -200,7 +196,7 @@ public class Profile {
     }
     
     /**
-     * Executre option 8 instructions
+     * Executre option 8 instructions from user TikTok interface
      */
     private void option8(String aName, String fName)
     {
@@ -226,6 +222,9 @@ public class Profile {
         }
         
     }
+    /**
+     * Executre option 9 instructions from user TikTok interface
+     */
     private void option9() 
     {
         String unfollowedAcc, unfollowingAcc;
@@ -254,12 +253,12 @@ public class Profile {
         {
             node.getNodeData().getAccountFollowers().remove(node1.getNodeData());
             node1.getNodeData().getAccountFollowing().remove(node.getNodeData());
+            System.out.println(unfollowingAcc +" Has unfollowed "+ feAccount);
         }
-        
-
-
-
     }
+    /**
+     * Executre option 10 instructions from user TikTok interface
+     */
     private void option10() throws IOException 
     {
         FileReader file = new FileReader("commandsList.txt");
@@ -326,7 +325,9 @@ public class Profile {
     
     br.close();
     }
-    /*Create a new account */
+    /**
+     * Creates a new account 
+     * */
     private void createNewAccount()
     {
         System.out.println("");
@@ -341,9 +342,10 @@ public class Profile {
         System.out.println("\nNew Account has been added:\n"+newAccount.toString());       
     }
     /**   
-    *@throws IOException
-    *Loads in the dataset file and populate the data into the Binary Search Tree
+    * @throws IOException
+    * Loads in the dataset file and populate the data into the Binary Search Tree
     */
+
     private  void populate() throws IOException
     {
 
@@ -386,7 +388,14 @@ public class Profile {
         System.out.println("\nDataset populated!!!");
         br.close();
     }
-
+    /**
+     * Processes the String line and looks for account names
+     * A followers account name and an account following this account
+     * Add the follower and  account following another account in their respective lists
+     * Given that they exist
+     * @param line
+     * akes in a String line
+     */
     void addFileFollower(String line)
     {
         String newFollower, newFollowing;
@@ -403,10 +412,14 @@ public class Profile {
     }
 
     /**
-     
-    *@param line
-    * Create a new post from the given dataset
-    */
+     * Processes the String line and looks for an account name
+     * Adds a post into the account
+     * The details are also extracted from the line String 
+     * @param line
+     * Takes in a String line
+     * 
+     * 
+     */
     private void newPost(String line)
      {
         String accountDetails, video,title,likes;
@@ -439,11 +452,5 @@ public class Profile {
                         if (newAccountQuery.equals("y"))
                             createNewAccount();
                     }   
-        }
-
-    /*  The function looks for a description matching an account
-    *   if such an account does not exist it asks user if they want to create an account or not
-    */
-    
-    
+        } 
 }

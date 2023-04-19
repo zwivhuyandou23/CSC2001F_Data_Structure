@@ -1,4 +1,4 @@
-public class Posts
+public class Post
 {
     private String title, videoName, numberOfLikes;
     /**
@@ -10,7 +10,7 @@ public class Posts
      * @param n
      * Takes in a String instance
      */
-    public Posts(String t, String v, String n)
+    public Post(String t, String v, String n)
     {
 
         title = t;

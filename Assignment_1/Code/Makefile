@@ -12,7 +12,7 @@ DOCDIR = doc
 $(BINDIR)/%.class: $(SRCDIR)/%.java
 	$(JAVAC) -d $(BINDIR) -cp $(BINDIR) $<
 
-classes = Posts.class Account.class BinaryTreeNode.class BinarySearchTree.class Profile.class TikTok.class
+classes = Post.class Account.class BinaryTreeNode.class BinarySearchTree.class Profile.class TikTok.class
 
 CLASS_FILES = $(classes:%.class=$(BINDIR)/%.class)
 

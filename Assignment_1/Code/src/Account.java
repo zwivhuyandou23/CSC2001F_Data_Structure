@@ -4,7 +4,7 @@ public class Account implements Comparable<Account>
 {
 
     private String accountName, description;
-    private ArrayList<Posts> accountPosts = new ArrayList<Posts>(); //different way of storing accountPosts?
+    private ArrayList<Post> accountPosts = new ArrayList<Post>(); //different way of storing accountPosts?
     private ArrayList<Account> followers = new ArrayList<Account>();
     private ArrayList<Account> following = new ArrayList<Account>();
     
@@ -47,9 +47,9 @@ public class Account implements Comparable<Account>
     /**
      * A get method for accountPosts lis
      * @return 
-     * A shallow copy of this account list of Posts 
+     * A shallow copy of this account list of Post 
     */
-    public ArrayList<Posts> getAccountPosts() 
+    public ArrayList<Post> getAccountPosts() 
     {
         return accountPosts;
     }
@@ -149,11 +149,11 @@ public class Account implements Comparable<Account>
     }
 
     /**
-     * Add a Posts object into the accountPosts list if it doesn't already exist.
+     * Add a Post object into the accountPosts list if it doesn't already exist.
      * @param p
-     * Takes in Posts p object
+     * Takes in Post p object
      */
-    public void addAccountPost(Posts p)
+    public void addAccountPost(Post p)
     {
             if (!accountPosts.contains(p))
                 accountPosts.add(p);
@@ -170,7 +170,7 @@ public class Account implements Comparable<Account>
        
         if (accountPosts != null )
         {   
-           for (Posts i: accountPosts)
+           for (Post i: accountPosts)
            {    
                 System.out.println(i);
             

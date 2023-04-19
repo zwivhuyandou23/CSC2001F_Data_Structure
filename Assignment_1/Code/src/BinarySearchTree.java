@@ -1,6 +1,6 @@
 
 
-class BinarySearchTree
+public class BinarySearchTree
 {
 
    BinaryTreeNode<Account> root;
@@ -80,6 +80,7 @@ class BinarySearchTree
       else if (find(d) == null)
       {
         insert(d, root);
+        System.out.println("\nNew Account has been created:\n"+d);
         
       }
       else

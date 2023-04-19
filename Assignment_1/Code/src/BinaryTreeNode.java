@@ -1,6 +1,5 @@
 
-/* Will make it an inner class for binarytree later on*/
-class BinaryTreeNode<T>
+public class BinaryTreeNode<T>
 {
 
    T data;
@@ -12,7 +11,7 @@ class BinaryTreeNode<T>
     * @param l
     * @param r
     */
-   BinaryTreeNode(T d, BinaryTreeNode<T> l, BinaryTreeNode<T> r){
+   public BinaryTreeNode(T d, BinaryTreeNode<T> l, BinaryTreeNode<T> r){
    
       data =d;
       left = l;
@@ -24,7 +23,7 @@ class BinaryTreeNode<T>
     * @return
     * return left node address
     */
-   BinaryTreeNode<T> getLeft(){
+   public BinaryTreeNode<T> getLeft(){
       return left;
    }
    /**
@@ -32,7 +31,7 @@ class BinaryTreeNode<T>
     * @return
     * return right node address
     */
-   BinaryTreeNode<T> getRight(){
+    public BinaryTreeNode<T> getRight(){
    
       return right;
    }
@@ -42,7 +41,7 @@ class BinaryTreeNode<T>
     * return Account data address
     */
 
-   T getNodeData()
+   public T getNodeData()
    {
       return data;
    }

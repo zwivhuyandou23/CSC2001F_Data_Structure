@@ -17,6 +17,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 
+
 // Graph class: evaluate shortest paths.
 //
 // CONSTRUCTION: with no parameters.
@@ -37,7 +38,11 @@ import java.util.StringTokenizer;
 public class Graph
 {
     public static final double INFINITY = Double.MAX_VALUE;
-    private Map<String,Vertex> vertexMap = new HashMap<String,Vertex>( );
+    public Map<String,Vertex> vertexMap = new HashMap<String,Vertex>( );
+    int ECount = 0;
+        int nodesSeen = 0;
+        double pqCount = 0;
+        int VCount = 0;
 
     /**
      * Add a new edge to the graph.
@@ -103,7 +108,7 @@ public class Graph
      * Initializes the vertex output info prior to running
      * any shortest path algorithm.
      */
-    private void clearAll( )
+    public void clearAll( )
     {
         for( Vertex v : vertexMap.values( ) )
             v.reset( );
@@ -159,19 +164,21 @@ public class Graph
         clearAll( );
         pq.add( new Path( start, 0 ) ); start.dist = 0;
         
-        int V = 0;
-        int E = 0;
-        int nodesSeen = 0;
+        
+        pqCount +=(int)Math.log(pq.size())/Math.log(2);
+
         while( !pq.isEmpty( ) && nodesSeen < vertexMap.size( ) )
         {
             Path vrec = pq.remove( );
+            pqCount = Math.log(pq.size());
             Vertex v = vrec.dest;
             if( v.scratch != 0 )  // already processed v
+            {   
                 continue;
-                
+            }   
             v.scratch = 1;
             nodesSeen++;
-            V++;
+            
 
             for( Edge e : v.adj )
             {
@@ -186,11 +193,15 @@ public class Graph
                     w.dist = v.dist +cvw;
                     w.prev = v;
                     pq.add( new Path( w, w.dist ) );
+                    ECount++;
                 }
-                E++;
+                
+                
             }
-        }
-        System.out.println("dijkstra Algorithm: V = "+V+" E = "+E);
+            
+        }System.out.println("Priority Queue operations: "+pqCount);
+        
+        
 
     }
 
@@ -344,8 +355,7 @@ public class Graph
      *    runs the shortest path algorithm.
      * The data file is a sequence of lines of the format
      *    source destination cost
-     */
-    public static void main( String [] args )
+     */ public static void main( String [] args )
     {
         Graph g = new Graph( );
         try
@@ -386,4 +396,5 @@ public class Graph
          while( processRequest( in, g ) )
              ;
     }
+   
 }

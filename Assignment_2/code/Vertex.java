@@ -9,13 +9,14 @@ class Vertex
     public double     dist;   // Cost
     public Vertex     prev;   // Previous vertex on shortest path
     public int        scratch;// Extra variable used in algorithm
+    public int noOfProcessedVertices;
 
     public Vertex( String nm )
-      { name = nm; adj = new LinkedList<Edge>( ); reset( ); }
+      { name = nm; adj = new LinkedList<Edge>( ); reset( ); noOfProcessedVertices++; }
 
     public void reset( )
     //  { dist = Graph.INFINITY; prev = null; pos = null; scratch = 0; }    
-    { dist = Graph.INFINITY; prev = null; scratch = 0; }
+    { dist = Graph.INFINITY; prev = null; scratch = 0; noOfProcessedVertices = 0 ;}
       
    // public PairingHeap.Position<Path> pos;  // Used for dijkstra2 (Chapter 23)
 }

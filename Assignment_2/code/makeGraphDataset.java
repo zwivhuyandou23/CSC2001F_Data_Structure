@@ -5,81 +5,88 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class makeGraphDataset 
-{
+{   static ArrayList<Integer> list = new ArrayList<Integer>();
     static ArrayList<String> Edges = new ArrayList<String>();
+    static ArrayList<String> nodes = new ArrayList<String>();
+    static ArrayList<String> dest = new ArrayList<String>();
+    static int[] noOfNodes = {10,20,30,40,50} ;
+    static int[] noOfEdges = {20,40,60,80,100} ;
+    static Random val1 = new Random();
+    static Random val2 = new Random();
+
     public static void main(String[] args) throws IOException
     {
-        Random a = new Random();
+        //update(10);
+        //pair (1,2);
+        for (int i: noOfNodes)
+        {
 
-        //int randomNo = a.nextInt(100);
+            for (int j : noOfEdges)
+            {   
 
-        int count = 0;
-        while (count<5)
-        {               
-            
-           int multi = 10*count;
-            count++;
-            String fName = "graph"+count+".txt"; 
-            File filename = new File(fName);
-
-            try (FileWriter fileWrite = new FileWriter(filename)) {
-                System.out.println(fName);
-                for (int i = 0; i<(multi/2)+10;i++)
-                {   int randomNode1 = a.nextInt(10+i);
-                    int randomNode2 = a.nextInt(10+i);
-
-                    int weight = a.nextInt(10);
-                    weight++;
-
-                    if(randomNode1 != randomNode2 && weight!=0 )
-                    {
-                        if (randomNode2 < 10 && randomNode1 <10  )
-                        {   String edge = "Node"+randomNode1+"  "+"Node"+randomNode2+"  "+weight;
-                            //System.out.println("Node"+randomNode1+"  "+"Node"+randomNode2+" "+weight);
-                            if (!Edges.contains(edge))
-                                Edges.add(edge);
-
-                        }
-                        else if (randomNode1 < 10)
-                            
-                        {
-                            String edge = "Node"+randomNode1+"  "+"Node"+randomNode2+" "+weight;
-                            //System.out.println("Node"+randomNode1+"  "+"Node"+randomNode2+" "+weight);
-                            if (!Edges.contains(edge))
-                                Edges.add(edge);
-                        }
-                        else if (randomNode2 < 10)
-                            
-                        {   String edge = "Node"+randomNode1+" "+"Node"+randomNode2+"  "+weight;
-                            
-                            //System.out.println("Node"+randomNode1+" "+"Node"+randomNode2+"  "+weight);
-                            if (!Edges.contains(edge))
-                                Edges.add(edge);
-                        }
-                        else 
-                            
-                        {   
-                            String edge ="Node"+randomNode1+" "+"Node"+randomNode2+" "+weight;
-
-                            //System.out.println("Node"+randomNode1+" "+"Node"+randomNode2+" "+weight);
-                            if (!Edges.contains(edge))
-                                Edges.add(edge);
-                        }
-                    }
-                    
-
-                }
-                for (String i : Edges)
-                {
-                    System.out.println(i);
-                    fileWrite.write(i+"\n");
-            
-                }
+                createNodes(i);
+                createEdges(j);
+                System.out.println("No of nodes: "+nodes.size()+"\n"+nodes);
+                System.out.println("No of edges: "+Edges.size()+"\n"+Edges);
+                writeToFile(i, j);
+            nodes.clear();
+            Edges.clear();
+            }
+        }
+       
+   
+    }
+    public static void writeToFile(int V, int E) throws IOException 
+    {
+        File file = new File("graph"+V+"."+E+".txt");
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            for (String i : Edges)
+            {
+                fileWriter.write(i+"\n");
+                
+                System.out.println(i);
             }
         }
         
-
-        
-
     }
+    public static void createEdges(int seed) 
+    {
+        int count =0;
+        while (seed !=count)
+        {
+            int index1 = val1.nextInt(nodes.size()-1);
+            int index2 = val2.nextInt(nodes.size()-1);
+            int weight = val2.nextInt(10);
+
+            String node1 = nodes.get(index1);
+            String node2 = nodes.get(index2);
+
+            String edge = "";
+            
+
+            if (weight != 0 && index1 != index2)
+            {
+                if (!Edges.contains(edge) && node1.length() == 5 && node2.length() == 5){edge = node1+"  "+node2+"  "+weight; Edges.add(edge); }
+
+                else if (!Edges.contains(edge) && node1.length() == 5 && node2.length() == 6){edge = node1+"  "+node2+" "+weight; Edges.add(edge); }
+
+                else if (!Edges.contains(edge) && node1.length() == 6 && node2.length() == 5){edge = node1+" "+node2+"  "+weight; Edges.add(edge); }
+
+                else if (!Edges.contains(edge) && node1.length() == 6 && node2.length() == 6){edge = node1+" "+node2+" "+weight;Edges.add(edge); }
+                
+            count++;}
+
+        }
+    }
+    public static void createNodes(int seed)
+    {
+
+        for (int i = 0; i < seed; i++)
+        {
+            String node = "node"+i;
+            nodes.add(node);
+            //System.out.println(node);
+        }
+    }
+  
 }

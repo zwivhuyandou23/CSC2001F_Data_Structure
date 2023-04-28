@@ -8,79 +8,112 @@ import java.util.Random;
 public class FunctionTest
 
 {
-    Graph graph;
+    
     ArrayList<Vertex> vertices = new ArrayList<Vertex>();
+    ArrayList<Vertex> startvertices = new ArrayList<Vertex>();
+    ArrayList<Vertex> destvertices = new ArrayList<Vertex>();
+    static int[] noOfNodes = {10,20,30,40,50} ;
+    static int[] noOfEdges = {20,40,60,80,100} ;
+    Graph graph;
+    int edgesAdded;
 
     public FunctionTest()
     {
-        graph = new Graph();
+     graph = new Graph();
+     edgesAdded = 0;
     }
     public void startTest() throws FileNotFoundException
-    {
+    {   
+
         addFileEdgesToQueue();
-        makeRequests();
+        
     }
     public void addFileEdgesToQueue() throws FileNotFoundException {
 
-        for (int i = 1; i<6;i++)
+        for (int i : noOfNodes)
         {   
-            
-            FileReader file = new FileReader("C:\\Users\\Zwivh\\OneDrive\\Desktop\\Repositories\\CSC2001F_Data_Structure\\Assignment_2\\code\\graph"+i +".txt");
-            System.out.println("graph"+i +".txt");
-            try (BufferedReader br = new BufferedReader(file)) 
-            {   String line = br.readLine();
-                while (line!=null){
-
+            for (int j : noOfEdges)
+            {
+                FileReader file = new FileReader("graph"+i+"."+j +".txt");
+                System.out.println("graph"+i+"."+j +".txt");
+                try (BufferedReader br = new BufferedReader(file)) 
+                {   String line = br.readLine();
                     
-                    String sourceName, destName;
-                    double cost;
-                    sourceName = line.substring(0,6);
-                    destName = line.substring(7,13);
-                    String costy = line.substring(14);
-                    cost = Double.valueOf(costy);
+                    while (line!=null){
 
-                    System.out.println(line);
-                    //System.out.println(sourceName+"\n"+destName+"\n"+cost+"\n");
-                    line = br.readLine();
+                        
+                        String sourceName, destName;
+                        double cost;
+                        sourceName = line.substring(0,6);
+                        destName = line.substring(7,13);
+                        String costy = line.substring(14);
+                        cost = Double.valueOf(costy);
 
-                    graph.addEdge(sourceName, destName, cost);
-                    vertices.add(graph.getVertex(sourceName));
-                    vertices.add(graph.getVertex(destName));
+                        //System.out.println(line);
+                        //System.out.println(sourceName+"\n"+destName);
+                        line = br.readLine();
 
+                        graph.addEdge(sourceName, destName, cost);
+                        edgesAdded++;
+
+                        if (!vertices.contains(graph.getVertex(sourceName))){
+                            
+                            vertices.add(graph.getVertex(sourceName));}
+
+                        if (!startvertices.contains(graph.getVertex(sourceName))){
+                            
+                            startvertices.add(graph.getVertex(sourceName));}
+                        else{
+                            
+                            destvertices.add(graph.getVertex(sourceName));}
+                    }
+                    //System.out.println("Total Number of Vertices: "+graph.vertexMap.size());
                     
-
-
+                makeRequests();
+                graph.clearAll();
+                edgesAdded = 0;
+                } 
+                catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+                
         }
+        
+    }
+    public static void write() {
         
     }
     public void makeRequests()
     {
         int c = 0;
-        while(c<10)
+        Random a = new Random();
+        
+
+        //System.out.println("Total Number of Edges: "+edgesAdded);
+        while(startvertices.size()>1 && destvertices.size()>1)
         {
-            Random a = new Random();
-            int index = a.nextInt(vertices.size()-1);
+            int i = a.nextInt(startvertices.size()-1);
+            int j = a.nextInt(destvertices.size()-1);
 
-            Vertex startName = vertices.get(index);
-            System.out.println("Vertex "+startName.name);
+            if (i != j)
+            {
+                Vertex start = startvertices.get(i);
+            Vertex dest = destvertices.get(j);
+            System.out.println("Start "+start.name+"\nDestination "+dest.name);
+            graph.dijkstra(start.name);
             
-            graph.unweighted(startName.name);
+            
+            graph.printPath(dest.name);
+        
+            System.out.println();
+            startvertices.remove(i);
+            destvertices.remove(j);
 
-            System.out.println("Vertex "+startName.name);
-            graph.dijkstra(startName.name);
-
-            System.out.println("Vertex "+startName.name);
-            graph.negative(startName.name);
-
-            System.out.println("Vertex "+startName.name);
-            graph.acyclic(startName.name);
-
+            
             c++;
+            }
         }
         
     }

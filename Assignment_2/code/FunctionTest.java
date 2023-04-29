@@ -1,12 +1,13 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class FunctionTest
-
 {
     
     ArrayList<Vertex> vertices = new ArrayList<Vertex>();
@@ -14,33 +15,49 @@ public class FunctionTest
     ArrayList<Vertex> destvertices = new ArrayList<Vertex>();
     static int[] noOfNodes = {10,20,30,40,50} ;
     static int[] noOfEdges = {20,40,60,80,100} ;
+    static ArrayList<Integer> ops = new ArrayList<Integer>();
     Graph graph;
     int edgesAdded;
+    int operations = 0;
+    static ArrayList<String> data = new ArrayList<String>();
+
+    
+    static FileWriter dataToFile;
+    
+
+    
 
     public FunctionTest()
     {
-     graph = new Graph();
+        try {
+            dataToFile =  new FileWriter(new File("data.csv"));
+        } catch (Exception e) 
+        {
+            // TODO: handle exception
+        }
      edgesAdded = 0;
     }
-    public void startTest() throws FileNotFoundException
+    public void startTest() throws IOException
     {   
-
         addFileEdgesToQueue();
-        
+        writeToFile();
     }
-    public void addFileEdgesToQueue() throws FileNotFoundException {
+    public void addFileEdgesToQueue() throws IOException {
 
         for (int i : noOfNodes)
         {   
             for (int j : noOfEdges)
             {
+                
                 FileReader file = new FileReader("graph"+i+"."+j +".txt");
-                System.out.println("graph"+i+"."+j +".txt");
+                System.out.println("File read..\ngraph"+i+"."+j +".txt");
+
                 try (BufferedReader br = new BufferedReader(file)) 
                 {   String line = br.readLine();
-                    
-                    while (line!=null){
-
+                    graph = new Graph();
+                    while (line!=null)
+                    {
+                        
                         
                         String sourceName, destName;
                         double cost;
@@ -52,68 +69,88 @@ public class FunctionTest
                         //System.out.println(line);
                         //System.out.println(sourceName+"\n"+destName);
                         line = br.readLine();
+                        
 
                         graph.addEdge(sourceName, destName, cost);
                         edgesAdded++;
-
-                        if (!vertices.contains(graph.getVertex(sourceName))){
-                            
-                            vertices.add(graph.getVertex(sourceName));}
-
-                        if (!startvertices.contains(graph.getVertex(sourceName))){
-                            
-                            startvertices.add(graph.getVertex(sourceName));}
-                        else{
-                            
-                            destvertices.add(graph.getVertex(sourceName));}
+                        vertices.add(graph.getVertex(sourceName));
+                        vertices.add(graph.getVertex(destName));
                     }
                     //System.out.println("Total Number of Vertices: "+graph.vertexMap.size());
-                    
-                makeRequests();
-                graph.clearAll();
-                edgesAdded = 0;
                 } 
                 catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+               // System.out.println(startvertices);
+              
+            makeRequests(10,i,j);
+            
             }
                 
         }
         
-    }
-    public static void write() {
+        
+        
+        //System.out.println(ops.size());
+
+        graph.clearAll();
+        edgesAdded = 0;
+        
+        //graph.pqCount = 0;
         
     }
-    public void makeRequests()
+   
+    public void makeRequests(int seed ,int V, int E) throws IOException
     {
-        int c = 0;
+        
+        
         Random a = new Random();
+        Random b = new Random();
         
 
-        //System.out.println("Total Number of Edges: "+edgesAdded);
-        while(startvertices.size()>1 && destvertices.size()>1)
+        
+        while(seed > 1 )
         {
-            int i = a.nextInt(startvertices.size()-1);
-            int j = a.nextInt(destvertices.size()-1);
+            int i = a.nextInt(seed-1);
+            int j = b.nextInt(seed-1);
+            //System.out.println(j+" Total Number of Edges: "+i);
+            //System.out.println(seed);
+            Vertex start = vertices.get(i); //start node
+            Vertex dest = vertices.get(j); // destination
 
-            if (i != j)
+            if (!start.name.equals(dest.name) && start != null && dest != null)
             {
-                Vertex start = startvertices.get(i);
-            Vertex dest = destvertices.get(j);
-            System.out.println("Start "+start.name+"\nDestination "+dest.name);
-            graph.dijkstra(start.name);
             
             
+            //System.out.println("Start "+(start.name));
+            operations  = graph.dijkstra(start.name);
+           //System.out.println(operations);
             graph.printPath(dest.name);
-        
-            System.out.println();
-            startvertices.remove(i);
-            destvertices.remove(j);
-
             
-            c++;
+            if (operations !=0 )
+            
+            {
+                //System.out.println(V+", "+E+", "+operations);
+                data.add(V+", "+E+", "+operations+", "+(int)(E*Math.log(V)));
+            
             }
+            
+            vertices.remove(i);
+            vertices.remove(j);
+            }
+            seed--;}
+            //System.out.println(data);
+        
+    }
+    public static void writeToFile() throws IOException 
+    {   
+        dataToFile.write("Vertices"+","+"Edges"+","+"Operations"+","+"Theoretical"+"\n");
+        for (String i : data)
+        {
+            System.out.println(i);
+            dataToFile.write(i+"\n");
+            dataToFile.flush();
         }
         
     }

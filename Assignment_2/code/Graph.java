@@ -5,6 +5,8 @@
  */
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.BreakIterator;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
@@ -15,7 +17,6 @@ import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-
 
 
 // Graph class: evaluate shortest paths.
@@ -38,12 +39,9 @@ import java.util.StringTokenizer;
 public class Graph
 {
     public static final double INFINITY = Double.MAX_VALUE;
-    public Map<String,Vertex> vertexMap = new HashMap<String,Vertex>( );
-    int ECount = 0;
-        int nodesSeen = 0;
-        double pqCount = 0;
-        int VCount = 0;
-
+    private Map<String,Vertex> vertexMap = new HashMap<String,Vertex>( );
+    
+    public ArrayList<Integer> operations;
     /**
      * Add a new edge to the graph.
      */
@@ -63,14 +61,15 @@ public class Graph
     {
         Vertex w = vertexMap.get( destName );
         if( w == null )
-            throw new NoSuchElementException( "Destination vertex not found" );
+            return;//throw new NoSuchElementException( "Destination vertex not found" );
         else if( w.dist == INFINITY )
-            System.out.println( destName + " is unreachable" );
+          // System.out.println( destName + " is unreachable" );
+           ;
         else
         {
-            System.out.print( "(Cost is: " + w.dist + ") " );
+           // System.out.print( "(Cost is: " + w.dist + ") " );
             printPath( w );
-            System.out.println( );
+           // System.out.println( );
         }
     }
 
@@ -99,9 +98,9 @@ public class Graph
         if( dest.prev != null )
         {
             printPath( dest.prev );
-            System.out.print( " to " );
+            //System.out.print( " to " );
         }
-        System.out.print( dest.name );
+        //System.out.print( dest.name );
     }
     
     /**
@@ -118,9 +117,7 @@ public class Graph
      * Single-source unweighted shortest-path algorithm.
      */
     public void unweighted( String startName )
-    {   
-        int V = 0;
-        int E = 0;
+    {
         clearAll( ); 
 
         Vertex start = vertexMap.get( startName );
@@ -133,10 +130,9 @@ public class Graph
         while( !q.isEmpty( ) )
         {
             Vertex v = q.remove( );
-            V++;
+
             for( Edge e : v.adj )
             {
-                E++;
                 Vertex w = e.dest;
                 if( w.dist == INFINITY )
                 {
@@ -146,39 +142,36 @@ public class Graph
                 }
             }
         }
-        System.out.println("unweighted Algorithm: V = "+V+" E = "+E);
     }
 
     /**
      * Single-source weighted shortest-path algorithm. (Dijkstra) 
      * using priority queues based on the binary heap
      */
-    public void dijkstra( String startName )
-    {
+    public int dijkstra( String startName )
+    {   operations = new ArrayList<Integer>(); 
         PriorityQueue<Path> pq = new PriorityQueue<Path>( );
-
+        
         Vertex start = vertexMap.get( startName );
         if( start == null )
-            throw new NoSuchElementException( "Start vertex not found" );
+            return 0;
+            //throw new NoSuchElementException( "Start vertex not found" );
 
         clearAll( );
         pq.add( new Path( start, 0 ) ); start.dist = 0;
-        
-        
-        pqCount +=(int)Math.log(pq.size())/Math.log(2);
-
+        int pqCount = 0;
+        int nodesSeen = 0;
         while( !pq.isEmpty( ) && nodesSeen < vertexMap.size( ) )
-        {
+        {    
+            pqCount +=(int)(Math.log(pq.size())/Math.log(2));
+            //System.out.println(pqCount);
             Path vrec = pq.remove( );
-            pqCount = Math.log(pq.size());
             Vertex v = vrec.dest;
             if( v.scratch != 0 )  // already processed v
-            {   
                 continue;
-            }   
+                
             v.scratch = 1;
             nodesSeen++;
-            
 
             for( Edge e : v.adj )
             {
@@ -193,15 +186,13 @@ public class Graph
                     w.dist = v.dist +cvw;
                     w.prev = v;
                     pq.add( new Path( w, w.dist ) );
-                    ECount++;
+                    pqCount +=(int)(Math.log(pq.size())/Math.log(2));
                 }
-                
-                
             }
-            
-        }System.out.println("Priority Queue operations: "+pqCount);
-        
-        
+        }
+        //System.out.println("No of ops: "+ pqCount);
+        return pqCount;
+       
 
     }
 
@@ -219,19 +210,18 @@ public class Graph
 
         Queue<Vertex> q = new LinkedList<Vertex>( );
         q.add( start ); start.dist = 0; start.scratch++;
-        int V = 0;
-        int E = 0;
+
         while( !q.isEmpty( ) )
         {
             Vertex v = q.remove( );
             if( v.scratch++ > 2 * vertexMap.size( ) )
                 throw new GraphException( "Negative cycle detected" );
-            V++;
+
             for( Edge e : v.adj )
             {
                 Vertex w = e.dest;
                 double cvw = e.cost;
-                E++;
+                
                 if( w.dist > v.dist + cvw )
                 {
                     w.dist = v.dist + cvw;
@@ -244,7 +234,6 @@ public class Graph
                 }
             }
         }
-        System.out.println("negative Algorithm: V = "+V+" E = "+E);
     }
 
     /**
@@ -261,34 +250,25 @@ public class Graph
         start.dist = 0;
         
           // Compute the indegrees
-        int V =0;
-        int E = 0;
 		Collection<Vertex> vertexSet = vertexMap.values( );
         for( Vertex v : vertexSet )
-        {   V++;
             for( Edge e : v.adj )
-            {   E++;
                 e.dest.scratch++;
-            }
-        }
             
           // Enqueue vertices of indegree zero
         for( Vertex v : vertexSet )
             if( v.scratch == 0 )
                 q.add( v );
-
-            V++;
        
         int iterations;
         for( iterations = 0; !q.isEmpty( ); iterations++ )
         {
             Vertex v = q.remove( );
-            V++;
+
             for( Edge e : v.adj )
             {
                 Vertex w = e.dest;
                 double cvw = e.cost;
-                E++;
                 
                 if( --w.scratch == 0 )
                     q.add( w );
@@ -306,8 +286,6 @@ public class Graph
         
         if( iterations != vertexMap.size( ) )
             throw new GraphException( "Graph has a cycle!" );
-            
-        System.out.println("acyclic Algorithm: V = "+V+" E = "+E);
     }
 
     /**
@@ -355,36 +333,38 @@ public class Graph
      *    runs the shortest path algorithm.
      * The data file is a sequence of lines of the format
      *    source destination cost
-     */ public static void main( String [] args )
+     */
+    public static void main( String [ ] args )
     {
         Graph g = new Graph( );
         try
         {   	
-            FileReader fin = new FileReader("Graph1.txt");
-            try (Scanner graphFile = new Scanner( fin )) {
-                // Read the edges and insert
-                String line;
-                while( graphFile.hasNextLine( ) )
-                {
-                    line = graphFile.nextLine( );
-                    StringTokenizer st = new StringTokenizer( line );
+            FileReader fin = new FileReader("graph10.20");
+            Scanner graphFile = new Scanner( fin );
 
-                    try
+            // Read the edges and insert
+            String line;
+            while( graphFile.hasNextLine( ) )
+            {
+                line = graphFile.nextLine( );
+                StringTokenizer st = new StringTokenizer( line );
+
+                try
+                {
+                    if( st.countTokens( ) != 3 )
                     {
-                        if( st.countTokens( ) != 3 )
-                        {
-                            System.err.println( "Skipping ill-formatted line " + line );
-                            continue;
-                        }
-                        String source  = st.nextToken( );
-                        String dest    = st.nextToken( );
-                        int    cost    = Integer.parseInt( st.nextToken( ) );
-                        g.addEdge( source, dest, cost );
+                        System.err.println( "Skipping ill-formatted line " + line );
+                        continue;
                     }
-                    catch( NumberFormatException e )
-                      { System.err.println( "Skipping ill-formatted line " + line ); }
-                 }
-            }
+                    String source  = st.nextToken( );
+                    String dest    = st.nextToken( );
+                    int    cost    = Integer.parseInt( st.nextToken( ) );
+                    g.addEdge( source, dest, cost );
+                    
+                }
+                catch( NumberFormatException e )
+                  { System.err.println( "Skipping ill-formatted line " + line ); }
+             }
          }
          catch( IOException e )
            { System.err.println( e ); }
@@ -396,5 +376,4 @@ public class Graph
          while( processRequest( in, g ) )
              ;
     }
-   
 }

@@ -30,7 +30,7 @@ public class FunctionTest
     public FunctionTest()
     {
         try {
-            dataToFile =  new FileWriter(new File("data.xlsx"));
+            dataToFile =  new FileWriter(new File("data.csv"));
         } catch (Exception e) 
         {
             // TODO: handle exception
@@ -84,7 +84,7 @@ public class FunctionTest
                 }
                // System.out.println(startvertices);
               
-            makeRequests(10,i,j);
+            makeRequests(5,i,j);
             
             }
                 
@@ -128,13 +128,12 @@ public class FunctionTest
            //System.out.println(operations);
             graph.printPath(dest.name);
             
-            if (operations !=0 )
             
-            {
                 //System.out.println(V+", "+E+", "+operations);
+            if (operations!=0)
                 data.add(V+", "+E+", "+operations+", "+(int)(E*Math.log(V)));
             
-            }
+            
             
             vertices.remove(i);
             vertices.remove(j);
@@ -146,6 +145,7 @@ public class FunctionTest
     public static void writeToFile() throws IOException 
     {   
         dataToFile.write("Vertices"+","+"Edges"+","+"Operations"+","+"Theoretical"+"\n");
+        dataToFile.write(0+", "+0+", "+0+", "+0+"\n");
         for (String i : data)
         {
             System.out.println(i);

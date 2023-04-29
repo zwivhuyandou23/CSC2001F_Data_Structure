@@ -30,7 +30,7 @@ public class FunctionTest
     public FunctionTest()
     {
         try {
-            dataToFile =  new FileWriter(new File("data.csv"));
+            dataToFile =  new FileWriter(new File("data.xlsx"));
         } catch (Exception e) 
         {
             // TODO: handle exception

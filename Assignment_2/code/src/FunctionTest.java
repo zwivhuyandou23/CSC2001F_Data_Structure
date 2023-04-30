@@ -30,7 +30,7 @@ public class FunctionTest
     public FunctionTest()
     {
         try {
-            dataToFile =  new FileWriter(new File("data.csv"));
+            dataToFile =  new FileWriter(new File("data\\data.csv"));
         } catch (Exception e) 
         {
             // TODO: handle exception
@@ -38,7 +38,7 @@ public class FunctionTest
      edgesAdded = 0;
     }
     public void startTest() throws IOException
-    {   
+    {   new makeGraphDataset().makedataset(); 
         addFileEdgesToQueue();
         writeToFile();
     }
@@ -49,8 +49,8 @@ public class FunctionTest
             for (int j : noOfEdges)
             {
                 
-                FileReader file = new FileReader("graph"+i+"."+j +".txt");
-                System.out.println("File read..\ngraph"+i+"."+j +".txt");
+                FileReader file = new FileReader("data\\graph"+i+"."+j +".txt");
+                System.out.println("graph"+i+"."+j +".txt\nFile read...\n");
 
                 try (BufferedReader br = new BufferedReader(file)) 
                 {   String line = br.readLine();
@@ -84,7 +84,7 @@ public class FunctionTest
                 }
                // System.out.println(startvertices);
               
-            makeRequests(5,i,j);
+            makeRequests(2,i,j);
             
             }
                 
@@ -112,8 +112,8 @@ public class FunctionTest
         
         while(seed > 1 )
         {
-            int i = a.nextInt(seed-1);
-            int j = b.nextInt(seed-1);
+            int i = a.nextInt(V-1);
+            int j = b.nextInt(V-1);
             //System.out.println(j+" Total Number of Edges: "+i);
             //System.out.println(seed);
             Vertex start = vertices.get(i); //start node
@@ -129,9 +129,11 @@ public class FunctionTest
             graph.printPath(dest.name);
             
             
-                //System.out.println(V+", "+E+", "+operations);
-            if (operations!=0)
-                data.add(V+", "+E+", "+operations+", "+(int)(E*Math.log(V)));
+           // System.out.println(V+", "+E+", "+operations);
+            if (operations<1)
+                makeRequests(seed, V, E);
+            else
+                data.add(V+", "+E+", "+operations+", "+(E*Math.log(V)));
             
             
             

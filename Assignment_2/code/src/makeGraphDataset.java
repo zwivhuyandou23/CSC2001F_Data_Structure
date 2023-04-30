@@ -5,40 +5,43 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class makeGraphDataset 
-{   static ArrayList<Integer> list = new ArrayList<Integer>();
-    static ArrayList<String> Edges = new ArrayList<String>();
-    static ArrayList<String> nodes = new ArrayList<String>();
-    static ArrayList<String> dest = new ArrayList<String>();
+{   //static ArrayList<Integer> list = new ArrayList<Integer>();
+    static ArrayList<String> Edges;
+    static ArrayList<String> nodes;
+    //static ArrayList<String> dest = new ArrayList<String>();
     static int[] noOfNodes = {10,20,30,40,50} ;
     static int[] noOfEdges = {20,40,60,80,100} ;
-    static Random val1 = new Random();
-    static Random val2 = new Random();
+    static Random val1 ;
+    static Random val2;
 
-    public static void main(String[] args) throws IOException
+    public makeGraphDataset(){
+        Edges = new ArrayList<String>();
+        nodes = new ArrayList<String>();
+        val1 = new Random();
+        val2 = new Random();
+
+    }
+    public void makedataset() throws IOException
     {
-        //update(10);
-        //pair (1,2);
         for (int i: noOfNodes)
         {
-
             for (int j : noOfEdges)
-            {   
-
+            { 
                 createNodes(i);
                 createEdges(j);
-                System.out.println("No of nodes: "+nodes.size()+"\n"+nodes);
-                System.out.println("No of edges: "+Edges.size()+"\n"+Edges);
+               // System.out.println("No of nodes: "+nodes.size()+"\n"+nodes);
+                //System.out.println("No of edges: "+Edges.size()+"\n"+Edges);
                 writeToFile(i, j);
-            nodes.clear();
-            Edges.clear();
+                nodes.clear();
+                Edges.clear();
             }
         }
        
    
     }
-    public static void writeToFile(int V, int E) throws IOException 
+    public void writeToFile(int V, int E) throws IOException 
     {
-        File file = new File("graph"+V+"."+E+".txt");
+        File file = new File("data\\graph"+V+"."+E+".txt");
         try (FileWriter fileWriter = new FileWriter(file)) {
             for (String i : Edges)
             {
@@ -49,7 +52,7 @@ public class makeGraphDataset
         }
         
     }
-    public static void createEdges(int seed) 
+    public void createEdges(int seed) 
     {
         int count =0;
         while (seed !=count)
@@ -78,7 +81,7 @@ public class makeGraphDataset
 
         }
     }
-    public static void createNodes(int seed)
+    public void createNodes(int seed)
     {
 
         for (int i = 0; i < seed; i++)

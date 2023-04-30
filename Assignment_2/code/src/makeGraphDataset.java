@@ -47,7 +47,7 @@ public class makeGraphDataset
             {
                 fileWriter.write(i+"\n");
                 
-                System.out.println(i);
+                //System.out.println(i);
             }
         }
         

@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -84,7 +83,7 @@ public class FunctionTest
                 }
                // System.out.println(startvertices);
               
-            makeRequests(2,i,j);
+            makeRequests(1,i,j);
             
             }
                 
@@ -110,7 +109,7 @@ public class FunctionTest
         
 
         
-        while(seed > 1 )
+        while(seed !=0 ) 
         {
             int i = a.nextInt(V-1);
             int j = b.nextInt(V-1);
@@ -119,7 +118,7 @@ public class FunctionTest
             Vertex start = vertices.get(i); //start node
             Vertex dest = vertices.get(j); // destination
 
-            if (!start.name.equals(dest.name) && start != null && dest != null)
+            if (!start.name.equals(dest.name) )
             {
             
             
@@ -131,17 +130,20 @@ public class FunctionTest
             
          System.out.println(V+", "+E+", "+operations);
             if (operations == 0)
-                makeRequests(seed, V, E);
+            System.out.println("");    
+            //makeRequests(seed, V, E);
                 
-            else
-                data.add(V+", "+E+", "+operations+", "+(E*Math.log(V)));
+            else{
+                data.add(V+", "+E+", "+operations+", "+(E*Math.log(V)));seed--;}
             
             
             
             vertices.remove(i);
             vertices.remove(j);
+            
             }
-            seed--;}
+            
+            }
             //System.out.println(data);
         
     }

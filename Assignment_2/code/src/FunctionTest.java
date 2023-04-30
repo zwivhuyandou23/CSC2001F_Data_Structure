@@ -129,9 +129,10 @@ public class FunctionTest
             graph.printPath(dest.name);
             
             
-           // System.out.println(V+", "+E+", "+operations);
-            if (operations<1)
+         System.out.println(V+", "+E+", "+operations);
+            if (operations == 0)
                 makeRequests(seed, V, E);
+                
             else
                 data.add(V+", "+E+", "+operations+", "+(E*Math.log(V)));
             

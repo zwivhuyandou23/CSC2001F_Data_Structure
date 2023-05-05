@@ -16,16 +16,14 @@ public class FunctionTest
     static int[] noOfEdges = {20,40,60,80,100} ;
     static ArrayList<Integer> ops = new ArrayList<Integer>();
     Graph graph;
-    int edgesAdded;
+    
     int operations = 0;
     static ArrayList<String> data = new ArrayList<String>();
 
-    
     static FileWriter dataToFile;
-    
-
-    
-
+    /**
+     * Initialises the csv file object that stores the number of operations the Dikjtra's algorithm takes to find shortest path to a vertex
+     */
     public FunctionTest()
     {
         try {
@@ -34,13 +32,23 @@ public class FunctionTest
         {
             // TODO: handle exception
         }
-     edgesAdded = 0;
+
     }
+    /**
+     * Starts the program
+     * @throws IOException
+     */
     public void startTest() throws IOException
     {   new makeGraphDataset().makedataset(); 
         addFileEdgesToQueue();
         writeToFile();
     }
+    /**
+     * Processes text files with graph edges and initializes the graph instance and adds the egdes into the graph
+     * Stores vertices from the file into an ArrayList for use in the makeRequests() method
+     * Calls the makeRequests() method to test the Dijkstra's method 
+     * @throws IOException
+     */
     public void addFileEdgesToQueue() throws IOException {
 
         for (int i : noOfNodes)
@@ -55,98 +63,85 @@ public class FunctionTest
                 {   String line = br.readLine();
                     graph = new Graph();
                     while (line!=null)
-                    {
-                        
-                        
+                    {     
                         String sourceName, destName;
                         double cost;
                         sourceName = line.substring(0,6);
                         destName = line.substring(7,13);
                         String costy = line.substring(14);
                         cost = Double.valueOf(costy);
-
-                        //System.out.println(line);
-                        //System.out.println(sourceName+"\n"+destName);
                         line = br.readLine();
-                        
-
                         graph.addEdge(sourceName, destName, cost);
-                        edgesAdded++;
+                        
                         vertices.add(graph.getVertex(sourceName));
                         vertices.add(graph.getVertex(destName));
                     }
-                    //System.out.println("Total Number of Vertices: "+graph.vertexMap.size());
+            
                 } 
                 catch (IOException e) {
-                    // TODO Auto-generated catch block
+                    
                     e.printStackTrace();
-                }
-               // System.out.println(startvertices);
-              
+                } 
             makeRequests(1,i,j);
             
-            }
-                
+            }       
         }
-        
-        
-        
-        //System.out.println(ops.size());
-
         graph.clearAll();
-        edgesAdded = 0;
-        
-        //graph.pqCount = 0;
-        
-    }
-   
+            
+    } 
+   /**
+    * Randomly chooses start and destination vertices from the vertices list and make the Dikjstra's method take the start name as an argument
+    * The Dikstra's method has been modified to return operations done to find shortest path to a node.
+    * The operations are then stored in a list together with Vertices, Edges and Theoretical operations.
+    * @param seed
+    * Takes in an int value
+    * @param V
+    * Takes in an int value
+    * @param E
+    * Takes in an int value
+    * @throws IOException
+    */
     public void makeRequests(int seed ,int V, int E) throws IOException
     {
         
         
         Random a = new Random();
         Random b = new Random();
-        
-
-        
         while(seed !=0 ) 
         {
             int i = a.nextInt(V-1);
             int j = b.nextInt(V-1);
-            //System.out.println(j+" Total Number of Edges: "+i);
-            //System.out.println(seed);
+            
             Vertex start = vertices.get(i); //start node
             Vertex dest = vertices.get(j); // destination
 
             if (!start.name.equals(dest.name) )
             {
-            
-            
-            //System.out.println("Start "+(start.name));
             operations  = graph.dijkstra(start.name);
-           //System.out.println(operations);
+           
             graph.printPath(dest.name);
             
             
-         System.out.println(V+", "+E+", "+operations);
+            System.out.println(V+", "+E+", "+operations);
             if (operations == 0)
             System.out.println("");    
-            //makeRequests(seed, V, E);
+            
                 
             else{
                 data.add(V+", "+E+", "+operations+", "+(E*Math.log(V)));seed--;}
-            
-            
-            
             vertices.remove(i);
             vertices.remove(j);
             
             }
             
-            }
-            //System.out.println(data);
+        }
+            
         
     }
+    /**
+     * Writes the contents from the data list and writes them into a csv file object.
+     * @throws IOException
+     */
     public static void writeToFile() throws IOException 
     {   
         dataToFile.write("Vertices"+","+"Edges"+","+"Operations"+","+"Theoretical"+"\n");

@@ -9,10 +9,11 @@ SRCDIR = src
 BINDIR = bin
 DOCDIR = doc
 
-$(BINDIR)/%.class: $(SRCDIR)/%.java
-	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR):$(SRCDIR) $< 
+$(BINDIR)/%.class:$(SRCDIR)/%.java
+	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) -sourcepath $(SRCDIR) $< 
 
-classes = Vertex.class Edge.class Path.class GraphException.class Graph.class makeGraphDataset.class FunctionTest.class test.class
+classes=Edge.class Vertex.class Path.class \
+	GraphException.class Graph.class makeGraphDataset.class FunctionTest.class test.class
 
 CLASS_FILES = $(classes:%.class=$(BINDIR)/%.class)
 

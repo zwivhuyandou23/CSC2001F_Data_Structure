@@ -112,8 +112,16 @@ public class FunctionTest
             int i = a.nextInt(V-1);
             int j = b.nextInt(V-1);
             
-            Vertex start = vertices.get(i); //start node
-            Vertex dest = vertices.get(j); // destination
+            Vertex start = null;
+            Vertex dest = null;
+
+            
+            if(i< vertices.size() && j <vertices.size()  ){
+
+            start = vertices.get(i); //start node
+            dest = vertices.get(j); // destination
+            }
+        
 
             if (!start.name.equals(dest.name) )
             {

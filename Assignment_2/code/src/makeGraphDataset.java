@@ -77,7 +77,8 @@ public class makeGraphDataset
 
                 else if (!Edges.contains(edge) && node1.length() == 6 && node2.length() == 6){edge = node1+" "+node2+" "+weight;Edges.add(edge); }
                 
-            count++;}
+            count++;
+        }
 
         }
     }

@@ -1,0 +1,10 @@
+node19 node2  9
+node30 node21 2
+node25 node8  3
+node37 node6  6
+node30 node5  2
+node34 node12 8
+node8  node24 7
+node3  node35 1
+node11 node33 1
+node37 node6  7

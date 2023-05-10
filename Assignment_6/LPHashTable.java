@@ -28,27 +28,40 @@ public class LPHashTable extends HashTable {
     protected int findIndex(String key) {
 		// Implement using linear probing.
     int index = 0;
+    int full = 0;
+    //resetProbeCount();
         for (String i : table) 
         {
-            if (i != null)
-                {   
-                    if (i.equals(key))
-                        return  index;
-                }
-                index++;
+            
+            if (i != null && i.equals(key)){return index;}
+            
+            index++;    
         }
-        if (index>0)
-        {   
-            incProbeCount();
-            index = hashFunction(key);
+        index = 0;
+        int freeSlot = 0;
 
-            if(getProbeCount()> tableSize())
-                System.out.println("probing failed!!");
-            return index;    
-        }
-        else
-            index = -1;
-    return index;
+        index = hashFunction(key);
+        System.out.println("probecount = "+getProbeCount());
+        
+        incProbeCount();
+        while (table[index] != null)
+        {
+            incProbeCount();
+            System.out.println(key+" "+index+" "+getProbeCount());
+
+            index++;
+
+            if (index==tableSize())
+            {
+                index = 0;
+            }
+            if (freeSlot==tableSize())
+                return-1;
+          
+       freeSlot++;
+    }
+    
+       return index;
     }
 
 }

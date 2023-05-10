@@ -25,5 +25,35 @@ public class QPHashTable  extends HashTable {
      */
     protected int findIndex(String key) {
 		// Implement using quadratic probing.
-    return -1;}
+    int index = 0;
+        for (String i : table) 
+        {   
+            if (i != null && i.equals(key)){return index;}
+            index++;     
+        }
+        index = 0;
+        int freeSlot = 0;
+        
+        int hash = hashFunction(key);
+        index = hash;
+        incProbeCount();
+        while (table[index] != null)
+        {
+            
+            incProbeCount();
+            //System.out.println(key+" "+index+" "+freeSlot);
+            if (index >=tableSize())
+            {
+                index = 0;
+            }
+            if (freeSlot==tableSize())
+                return-1;
+
+       freeSlot++;
+       index = (hash + (freeSlot * freeSlot));
+       
+    }
+       return index;
+  }
+  
 }

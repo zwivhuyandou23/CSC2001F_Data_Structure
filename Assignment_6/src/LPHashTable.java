@@ -38,7 +38,7 @@ public class LPHashTable extends HashTable {
         while (load != loadFactor() && table[index] != null && !table[index].equals(key))
         {
                 incProbeCount();
-                index ++;
+                index = index % tableSize();
                // System.out.println(key+" "+index+" "+getProbeCount());
         }
 

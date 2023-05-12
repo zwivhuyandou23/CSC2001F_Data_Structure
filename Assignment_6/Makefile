@@ -25,7 +25,7 @@ javadoc:
 	$(JAVACDOC) -d $(DOCDIR) -sourcepath $(SRCDIR) -classpath $(BINDIR) $(SRCDIR)/*java
 
 run: $(CLASS_FILES)
-	java -cp bin LPAutoTest
+	
 	java -cp bin QPAutoTest
 
 

@@ -27,23 +27,29 @@ public class QPHashTable  extends HashTable {
 		// Implement using quadratic probing.
         int index = hashFunction(key);
         int fac = 1;
-        while (loadFactor() != 1 && table[index] != null && !table[index].equals(key))
+        
+        if (index >= 0 && index <= tableSize())
         {
+          System.out.println("\nindex: "+index+"\n");
+          while (loadFactor() != 1 && table[index] != null && !table[index].equals(key))
+           {
                 incProbeCount();
-                index = (index+fac*fac)%tableSize();
+                index = (index + (fac*fac) )%tableSize();
                 fac++;
-        }
+            }
 
-        if (table[index] == null || table[index] .equals(key)){
+          if (table[index] == null || table[index] .equals(key)){
 
-            incProbeCount();  
-            return index;  
+              incProbeCount();  
+              return index;  
 
-        }
-        else if (loadFactor() == 1){return -1;}  
-         incProbeCount();
+          }
+          else if (loadFactor() == 1){return -1;} 
+          }
+         
+        
         return index;
         
-  }
+      }
   
 }

@@ -32,14 +32,16 @@ public class LPHashTable extends HashTable {
     
        int index = hashFunction(key);
        // System.out.println("probecount = "+getProbeCount());
-       int load = 1;
+       int load = 0;
 
         
-        while (load != loadFactor() && table[index] != null && !table[index].equals(key))
+        while (loadFactor() == 1 && table[index] != null && !table[index].equals(key))
         {
                 incProbeCount();
-                index = index % tableSize();
-               // System.out.println(key+" "+index+" "+getProbeCount());
+                index ++;
+                if(load >= tableSize()){break;}
+                //System.out.println(key+" "+index+" "+getProbeCount());
+                load++;
         }
 
         if (table[index] == null || table[index] .equals(key)){
@@ -47,11 +49,8 @@ public class LPHashTable extends HashTable {
             incProbeCount();    
 
         }
-        else if (load == loadFactor()){return -1;}
-        
-        
+        else if (load == loadFactor()){return -1;}  
+       
         return index;
-        }
-   
-    
+        }   
 }

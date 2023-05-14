@@ -26,6 +26,6 @@ javadoc:
 
 run: $(CLASS_FILES)
 	
-	java -cp bin QPAutoTest
+	java -cp bin LPAutoTest
 
 

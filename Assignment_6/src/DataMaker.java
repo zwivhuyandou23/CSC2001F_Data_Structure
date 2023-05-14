@@ -1,5 +1,8 @@
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +20,8 @@ public class DataMaker {
         }
         return true;
     }
-    public static void main(final String[] args) {
+
+    public static void main(final String[] args) throws IOException {
         if (args.length!=2 || args[0].length()!=9 || !isInteger(args[1])) {
             System.out.println("java DataMaker <username> <quantity>");
         }
@@ -41,11 +45,17 @@ public class DataMaker {
                 System.out.printf("Username '%s' not found.", username);
                 System.exit(-1);
             }
-
+            
+            FileWriter file =  new FileWriter("data.txt");
+            
             for(int size = Integer.parseInt(args[1]); size>0; size--) {
                 System.out.println(allNames.get(index));
+                
+                file.write(size+"\n");
+                
                 index = (index+1)%allNames.size();
             }
+            
         }
     }
 

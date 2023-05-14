@@ -48,6 +48,7 @@ public abstract class HashTable  extends Monitorable {
      * Get hash function wieghts
      */
     public int[] getWeights() {
+        
         return Arrays.copyOf(this.weights, this.weights.length);
     }
     /**
